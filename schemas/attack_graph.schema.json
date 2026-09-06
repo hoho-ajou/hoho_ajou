@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AttackGraphOutput",
+  "description": "Attack Path Engine 모듈 출력 (Dashboard 소비용). CODEOWNERS: @공격경로담당 @대시보드담당. 형식은 범용 nodes/edges/paths — Cytoscape 등 라이브러리별 변환은 소비 측(Dashboard) 프론트엔드가 수행.",
+  "type": "object",
+  "required": ["schema_version", "run_id", "generated_at", "nodes", "edges", "paths"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "run_id": { "type": "string" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "source_module": { "type": "string", "const": "attack-path" },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "label", "risk_score"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string", "enum": ["dependency", "agent", "permission", "asset"] },
+          "label": { "type": "string", "description": "사람이 읽는 이름. Dashboard 표시용" },
+          "risk_score": { "type": "number", "minimum": 0, "maximum": 100, "description": "사전 정규화(0-100) 완료 — Dashboard는 재계산하지 않음" },
+          "attributes": {
+            "type": "object",
+            "description": "타입별 상세 정보 (패키지버전/cve_ids/권한명·자산명/에이전트명/ml_triggered_features 등)"
+          }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "source", "target", "type"],
+        "properties": {
+          "id": { "type": "string" },
+          "source": { "type": "string", "description": "nodes[].id 참조 — 참조 무결성 필수" },
+          "target": { "type": "string", "description": "nodes[].id 참조 — 참조 무결성 필수" },
+          "type": { "type": "string", "enum": ["depends_on", "grants", "exposes", "flagged_anomalous"] },
+          "risk_contribution": { "type": "number" }
+        }
+      }
+    },
+    "paths": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path_id", "node_sequence", "edge_sequence", "overall_risk_score", "description"],
+        "properties": {
+          "path_id": { "type": "string" },
+          "node_sequence": { "type": "array", "items": { "type": "string" }, "description": "nodes[].id 참조, 참조 무결성 필수 (export.py에서 검증 후 출력)" },
+          "edge_sequence": { "type": "array", "items": { "type": "string" }, "description": "edges[].id 참조, 참조 무결성 필수" },
+          "overall_risk_score": { "type": "number", "minimum": 0, "maximum": 100, "description": "사전 계산 완료" },
+          "description": { "type": "string", "description": "사람이 읽는 침해 시나리오 한 줄 설명" }
+        }
+      }
+    }
+  }
+}

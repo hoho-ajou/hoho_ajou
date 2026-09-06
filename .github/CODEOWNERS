@@ -1,0 +1,13 @@
+# AASM CODEOWNERS
+# 실제 이름은 팀원 확정 후 GitHub 아이디로 교체하세요 (예: @baeseungwon1010)
+
+/schemas/collector_output.schema.json   @총괄 @위험분석담당 @ML담당
+/schemas/risk_score.schema.json         @위험분석담당 @공격경로담당
+/schemas/ml_result.schema.json          @ML담당 @공격경로담당
+/schemas/attack_graph.schema.json       @공격경로담당 @대시보드담당
+
+/collector/                             @총괄
+/risk-analyzer/                         @위험분석담당
+/ml-detector/                           @ML담당
+/attack-path/                           @공격경로담당
+/dashboard/                             @대시보드담당

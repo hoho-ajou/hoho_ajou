@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MLResultOutput",
+  "description": "ML 이상탐지 모듈 출력. CODEOWNERS: @ML담당 @공격경로담당",
+  "type": "object",
+  "required": ["schema_version", "generated_at", "results"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["package_name", "package_version", "ecosystem", "is_flagged", "confidence_score", "model", "triggered_features"],
+        "properties": {
+          "package_name": { "type": "string" },
+          "package_version": { "type": "string" },
+          "ecosystem": { "type": "string" },
+          "is_flagged": { "type": "boolean" },
+          "confidence_score": { "type": "number", "minimum": 0, "maximum": 1 },
+          "model": { "type": "string" },
+          "triggered_features": {
+            "type": "array",
+            "description": "importance 내림차순 정렬, 상위 5개로 cap. Attack Path Engine이 attributes.ml_triggered_features로 그대로 매핑.",
+            "maxItems": 5,
+            "items": {
+              "type": "object",
+              "required": ["feature", "value", "importance"],
+              "properties": {
+                "feature": { "type": "string" },
+                "value": {},
+                "importance": { "type": "number", "minimum": 0, "maximum": 1 }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

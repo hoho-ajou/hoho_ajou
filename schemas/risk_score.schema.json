@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RiskScoreOutput",
+  "description": "Risk Analyzer 모듈 출력. CODEOWNERS: @위험분석담당 @공격경로담당",
+  "type": "object",
+  "required": ["generated_at", "packages"],
+  "properties": {
+    "generated_at": { "type": "string", "format": "date-time" },
+    "packages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "version", "ecosystem", "package_risk", "permission_weight", "permission_source", "risk_score", "risk_level", "signals"],
+        "properties": {
+          "name": { "type": "string" },
+          "version": { "type": "string" },
+          "ecosystem": { "type": "string" },
+          "package_risk": { "type": "number", "minimum": 0, "maximum": 1 },
+          "permission_weight": { "type": "number", "minimum": 1.0, "maximum": 3.0 },
+          "permission_source": {
+            "type": "string",
+            "description": "권한 등급 산정에 쓰인 권한 데이터의 출처. Risk Analyzer는 권한 목록을 직접 생성하지 않고 Attack Path Engine 소유 스키마를 참조한다.",
+            "enum": ["attack_path_engine", "default_medium_fallback"]
+          },
+          "risk_score": { "type": "number", "minimum": 0, "description": "숫자형 원점수(0~3.0). Dashboard 등 정렬/시각화용." },
+          "risk_level": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH"] },
+          "vulnerability_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Attack Path Engine 요청으로 추가 — Dashboard의 attributes.cve_ids 채우기용 원본 CVE/OSV ID 목록"
+          },
+          "signals": {
+            "type": "object",
+            "properties": {
+              "cvss_norm": { "type": "number", "minimum": 0, "maximum": 1 },
+              "cve_ids": { "type": "array", "items": { "type": "string" } },
+              "epss_score": { "type": "number", "minimum": 0, "maximum": 1 },
+              "typo_flag": { "type": "number", "enum": [0, 0.5, 1] },
+              "typo_nearest_match": { "type": ["string", "null"] },
+              "staleness_score": { "type": "number", "minimum": 0, "maximum": 1 },
+              "months_since_last_release": { "type": "number" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

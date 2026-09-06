@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# ML artifacts / raw datasets (too large / license-restricted for git)
+ml-detector/data/raw/
+ml-detector/models/artifacts/*.pkl
+ml-detector/models/artifacts/*.joblib
+
+# Node / dashboard
+node_modules/
+dashboard/dist/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Local run outputs
+data/
+*.log
+
+# 개인 제출용 원본 문서 (계획서/OT자료) - 저장소에는 안 올림
+*.hwp
+*.hwpx
+2026-2학기 파란학기제 OT자료_260826_153145.pdf
