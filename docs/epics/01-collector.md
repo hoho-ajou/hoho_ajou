@@ -1,30 +1,30 @@
-# [Epic] Dependency Collector 모듈 구축
+# [Epic] Dependency Collector 설계 문서 완성
 
 ## 목표
 
-AI 에이전트 저장소를 스캔해서 (1) 의존성 목록, (2) LangChain·MCP 등 외부 연동 도구, (3) PyPI 메타데이터·취약점, (4) 표준 SBOM을 자동으로 뽑아내는 파이프라인 입구 모듈을 완성한다. 이 모듈의 산출물이 Risk Analyzer·ML 이상탐지의 입력이 되므로, 여기서 놓친 자산은 뒤 단계 전체가 못 본다.
+AI 에이전트 저장소를 스캔해서 (1) 의존성 목록, (2) LangChain·MCP 등 외부 연동 도구, (3) PyPI 메타데이터·취약점, (4) 표준 SBOM을 자동으로 뽑아내는 파이프라인 입구 모듈의 **설계를, AI가 그대로 구현할 수 있는 수준까지** 완성한다. 실제 코드 구현은 이 Epic이 아니라 설계 확정 이후 단계에서 진행한다. 이 모듈의 산출물이 Risk Analyzer·ML 이상탐지의 입력이 되므로, 설계에서 놓친 케이스는 뒤 단계 전체가 못 본다.
 
 ## 범위
 
-- 매니페스트 파싱(requirements.txt, pyproject.toml, Pipfile, package.json)
-- 실제 import 스캔(pipreqs) 및 매니페스트와의 `--diff` 비교
-- Dockerfile 파싱(베이스 이미지, `pip install`, `COPY requirements*`)
-- LangChain·MCP 외부 연동 탐지(코드 내 import 패턴 + `mcp.json`류 설정 파일)
-- PyPI JSON API 메타데이터·취약점 조회 (캐싱·재시도 포함)
-- 취약점 정보 보완용 OSV 배치 조회
-- CycloneDX 포맷 SBOM 생성(`cyclonedx-py` 활용)
-- 위 모든 결과를 하나의 표준 출력 객체로 병합·검증·저장
+`docs/design/01-collector.md`를 아래 수준까지 심화 작성한다:
+- 매니페스트 파싱(requirements.txt, pyproject.toml, Pipfile, package.json) 각각의 함수 시그니처와 파싱 실패 시 동작
+- import 스캔(pipreqs) 결과와 매니페스트 `--diff` 비교 로직의 구체적 절차
+- Dockerfile 파싱(베이스 이미지, `pip install`, `COPY requirements*`) 대상 패턴
+- LangChain·MCP 외부 연동 탐지 규칙(코드 내 import 패턴 + `mcp.json`류 설정 파일 파싱)
+- PyPI JSON API 메타데이터·취약점 조회 절차(캐싱·재시도 정책 포함)
+- 취약점 정보 보완용 OSV 배치 조회 절차
+- CycloneDX 포맷 SBOM 생성 절차(`cyclonedx-py` 활용)
+- 위 모든 결과를 하나의 표준 출력 객체로 병합·검증·저장하는 순서
 
-**범위 밖**: 비-PyPI 생태계(npm 등)의 취약점 심층 분석, 컨테이너 OS 패키지(apt 등)의 상세 취약점 분석, reachability 분석(어떤 취약 함수가 실제 호출되는지) — 이는 추후 로드맵 또는 Risk Analyzer 영역.
+**범위 밖**: 비-PyPI 생태계(npm 등)의 취약점 심층 분석, 컨테이너 OS 패키지(apt 등)의 상세 취약점 분석, reachability 분석(어떤 취약 함수가 실제 호출되는지) — 이는 추후 로드맵 또는 Risk Analyzer 영역. **실제 코드 구현 자체도 이번 Epic의 범위 밖.**
 
 ## 완료조건
 
-- [ ] 임의의 공개 GitHub AI 에이전트 저장소(requirements.txt 유무와 무관)를 입력하면 의존성 목록이 생성된다
-- [ ] LangChain/MCP 연동이 있는 저장소에서 해당 연동이 최소 1개 이상 탐지된다
-- [ ] 각 의존성에 PyPI 메타데이터(버전·라이선스·해시)와 알려진 취약점 정보가 채워진다 (PyPI 미등록 패키지는 `unresolved`로 표시되고 파이프라인은 계속 진행된다)
-- [ ] CycloneDX 형식 SBOM 파일이 생성된다
-- [ ] 비공개/접근 불가 저장소, 매니페스트 부재, PyPI 조회 실패 등 예외 상황에서도 전체 프로세스가 죽지 않고 `partial`/`failed` 상태와 에러 목록을 포함한 결과를 반환한다
-- [ ] 출력이 `schemas/collector_output.schema.json` DRAFT를 만족하며, Risk Analyzer·ML 담당자 리뷰를 거쳐 스키마가 확정된다
+- [ ] 매니페스트 파서·import 스캐너·Dockerfile 파서·연동 탐지기·PyPI/OSV 조회·SBOM 생성, 각 기능의 함수 시그니처(입력 타입 → 출력 타입)가 `docs/design/01-collector.md`에 명시되어 있다
+- [ ] 각 기능마다 최소 1개 이상의 구체적 입력→출력 예시(실제 파일 내용 또는 JSON 스니펫)가 있다
+- [ ] "매니페스트 없음", "PyPI 미등록 패키지", "비공개/접근 불가 저장소", "PyPI/OSV 조회 실패" 등 최소 4개 이상의 엣지케이스가 "상황 → 기대 동작(`partial`/`failed` 상태와 에러 코드)" 표로 정리되어 있다
+- [ ] 출력 스키마가 `schemas/collector_output.schema.json`과 필드 단위로 100% 일치한다
+- [ ] Risk Analyzer·ML 담당자 리뷰를 거쳐 설계 문서가 확정된다 (`docs/design/_cross_review_questions.md`에 반영된 사항 재확인)
 
 ## 출력 인터페이스
 

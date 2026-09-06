@@ -1509,27 +1509,28 @@ dashboard/
 `[Epic] AASM 전체 파이프라인 오케스트레이션 및 schemas/ 계약 확립`
 
 ## 목표
-Collector → (Risk Analyzer, ML 병렬) → Attack Path Engine → Dashboard로 이어지는 5개 모듈이 실제로 데이터를 주고받으며 end-to-end로 동작하도록, 오케스트레이션 방식과 모듈 간 인터페이스(`schemas/`)를 확정한다.
+Collector → (Risk Analyzer, ML 병렬) → Attack Path Engine → Dashboard로 이어지는 5개 모듈이 실제로 데이터를 주고받을 수 있도록, 오케스트레이션 방식과 모듈 간 인터페이스(`schemas/`)를 **설계 문서 수준에서** 확정한다. 실제 구현(코드 작성)은 이 Epic의 범위가 아니며, 설계가 AI 구현체가 그대로 따라갈 수 있을 만큼 구체적인지가 완료 기준이다.
 
 ## 범위
 **이 Epic에서 다루는 것 (IN)**
-- `pipeline/` 오케스트레이터(각 모듈을 순서대로/병렬로 호출하는 얇은 CLI)의 구조 확정 및 최소 구현
-- `data/` 중간 산출물 디렉토리 규약(파일 네이밍, `run_id` 규칙)
-- `schemas/` 4개 파일의 존재 확정, 공통 메타 필드(`run_id`, `generated_at`, `source_module`, `schema_version`) 합의
-- 로깅·설정·테스트 등 프로젝트 전역 컨벤션 문서화 및 팀 합의
+- `pipeline/` 오케스트레이터(각 모듈을 순서대로/병렬로 호출하는 얇은 CLI)의 호출 흐름·에러 전파 방식을 의사코드 수준으로 설계
+- `data/` 중간 산출물 디렉토리 규약(파일 네이밍, `run_id` 규칙) 문서화
+- `schemas/` 4개 파일의 필드 확정, 공통 메타 필드(`run_id`, `generated_at`, `source_module`, `schema_version`) 합의 (이미 완료 — `docs/design/_cross_review_questions.md` 참고)
+- 로깅·설정·테스트 등 프로젝트 전역 컨벤션을 설계 문서에 명시
 - CODEOWNERS, 브랜치 전략 등 GIT_POLICY.md 내용의 실제 GitHub 설정 반영
 
-**이 Epic에서 다루지 않는 것 (모듈별 Epic으로 위임)**
+**이 Epic에서 다루지 않는 것 (모듈별 Epic으로 위임, 실제 코드 작성 전부 포함)**
 - 각 스키마 파일의 상세 필드 정의(Collector/Risk Analyzer/ML/Attack Path Engine 담당자가 각자 작성)
+- `pipeline/run.py` 등 실제 코드 구현 — 구현은 설계가 확정된 뒤 별도 단계
 - 각 모듈 내부 로직 구현(파싱 알고리즘, 점수화 공식, ML 모델, 그래프 생성 로직, 시각화 UI)
 - 클라우드 인프라(AWS EC2/S3/CloudWatch) 세부 구축
 
 ## 완료 조건
 - [ ] `docs/design/00-overall.md` 설계안이 팀 전체 리뷰 후 확정됨
-- [ ] `schemas/` 폴더에 4개 스키마 파일의 최소 스켈레톤(공통 메타 필드만 포함)이 생성되고 CODEOWNERS가 설정됨
-- [ ] `pipeline/run.py`가 더미(mock) 입출력으로라도 5개 모듈 호출 순서(병렬 fan-out/fan-in 포함)를 실제로 실행해 보임
-- [ ] 로깅/설정/테스트 컨벤션이 문서화되고 최소 1개 모듈에 시범 적용됨
-- [ ] 각 모듈 담당자가 자기 모듈의 하위 Epic/이슈를 이 Epic 산하에 생성함
+- [ ] `schemas/` 4개 스키마 파일이 필드 수준까지 확정되고 CODEOWNERS가 설정됨 (완료)
+- [ ] 오케스트레이션 흐름(호출 순서, 병렬 fan-out/fan-in, 각 단계 실패 시 처리 방식)이 `docs/design/00-overall.md`에 의사코드 또는 순서도 수준으로 문서화됨 — 실행 가능한 코드일 필요는 없음
+- [ ] 로깅/설정/테스트 컨벤션이 설계 문서에 명시됨
+- [ ] `docs/epics/06-open-decisions.md`의 팀 차원 결정 3건이 확정되어 이 문서에 반영됨
 
 ## 관련 모듈
 - Dependency Collector
@@ -1555,33 +1556,33 @@ Collector → (Risk Analyzer, ML 병렬) → Attack Path Engine → Dashboard로
 # 원본: docs/epics/01-collector.md
 # ============================================================
 
-# [Epic] Dependency Collector 모듈 구축
+# [Epic] Dependency Collector 설계 문서 완성
 
 ## 목표
 
-AI 에이전트 저장소를 스캔해서 (1) 의존성 목록, (2) LangChain·MCP 등 외부 연동 도구, (3) PyPI 메타데이터·취약점, (4) 표준 SBOM을 자동으로 뽑아내는 파이프라인 입구 모듈을 완성한다. 이 모듈의 산출물이 Risk Analyzer·ML 이상탐지의 입력이 되므로, 여기서 놓친 자산은 뒤 단계 전체가 못 본다.
+AI 에이전트 저장소를 스캔해서 (1) 의존성 목록, (2) LangChain·MCP 등 외부 연동 도구, (3) PyPI 메타데이터·취약점, (4) 표준 SBOM을 자동으로 뽑아내는 파이프라인 입구 모듈의 **설계를, AI가 그대로 구현할 수 있는 수준까지** 완성한다. 실제 코드 구현은 이 Epic이 아니라 설계 확정 이후 단계에서 진행한다. 이 모듈의 산출물이 Risk Analyzer·ML 이상탐지의 입력이 되므로, 설계에서 놓친 케이스는 뒤 단계 전체가 못 본다.
 
 ## 범위
 
-- 매니페스트 파싱(requirements.txt, pyproject.toml, Pipfile, package.json)
-- 실제 import 스캔(pipreqs) 및 매니페스트와의 `--diff` 비교
-- Dockerfile 파싱(베이스 이미지, `pip install`, `COPY requirements*`)
-- LangChain·MCP 외부 연동 탐지(코드 내 import 패턴 + `mcp.json`류 설정 파일)
-- PyPI JSON API 메타데이터·취약점 조회 (캐싱·재시도 포함)
-- 취약점 정보 보완용 OSV 배치 조회
-- CycloneDX 포맷 SBOM 생성(`cyclonedx-py` 활용)
-- 위 모든 결과를 하나의 표준 출력 객체로 병합·검증·저장
+`docs/design/01-collector.md`를 아래 수준까지 심화 작성한다:
+- 매니페스트 파싱(requirements.txt, pyproject.toml, Pipfile, package.json) 각각의 함수 시그니처와 파싱 실패 시 동작
+- import 스캔(pipreqs) 결과와 매니페스트 `--diff` 비교 로직의 구체적 절차
+- Dockerfile 파싱(베이스 이미지, `pip install`, `COPY requirements*`) 대상 패턴
+- LangChain·MCP 외부 연동 탐지 규칙(코드 내 import 패턴 + `mcp.json`류 설정 파일 파싱)
+- PyPI JSON API 메타데이터·취약점 조회 절차(캐싱·재시도 정책 포함)
+- 취약점 정보 보완용 OSV 배치 조회 절차
+- CycloneDX 포맷 SBOM 생성 절차(`cyclonedx-py` 활용)
+- 위 모든 결과를 하나의 표준 출력 객체로 병합·검증·저장하는 순서
 
-**범위 밖**: 비-PyPI 생태계(npm 등)의 취약점 심층 분석, 컨테이너 OS 패키지(apt 등)의 상세 취약점 분석, reachability 분석(어떤 취약 함수가 실제 호출되는지) — 이는 추후 로드맵 또는 Risk Analyzer 영역.
+**범위 밖**: 비-PyPI 생태계(npm 등)의 취약점 심층 분석, 컨테이너 OS 패키지(apt 등)의 상세 취약점 분석, reachability 분석(어떤 취약 함수가 실제 호출되는지) — 이는 추후 로드맵 또는 Risk Analyzer 영역. **실제 코드 구현 자체도 이번 Epic의 범위 밖.**
 
 ## 완료조건
 
-- [ ] 임의의 공개 GitHub AI 에이전트 저장소(requirements.txt 유무와 무관)를 입력하면 의존성 목록이 생성된다
-- [ ] LangChain/MCP 연동이 있는 저장소에서 해당 연동이 최소 1개 이상 탐지된다
-- [ ] 각 의존성에 PyPI 메타데이터(버전·라이선스·해시)와 알려진 취약점 정보가 채워진다 (PyPI 미등록 패키지는 `unresolved`로 표시되고 파이프라인은 계속 진행된다)
-- [ ] CycloneDX 형식 SBOM 파일이 생성된다
-- [ ] 비공개/접근 불가 저장소, 매니페스트 부재, PyPI 조회 실패 등 예외 상황에서도 전체 프로세스가 죽지 않고 `partial`/`failed` 상태와 에러 목록을 포함한 결과를 반환한다
-- [ ] 출력이 `schemas/collector_output.schema.json` DRAFT를 만족하며, Risk Analyzer·ML 담당자 리뷰를 거쳐 스키마가 확정된다
+- [ ] 매니페스트 파서·import 스캐너·Dockerfile 파서·연동 탐지기·PyPI/OSV 조회·SBOM 생성, 각 기능의 함수 시그니처(입력 타입 → 출력 타입)가 `docs/design/01-collector.md`에 명시되어 있다
+- [ ] 각 기능마다 최소 1개 이상의 구체적 입력→출력 예시(실제 파일 내용 또는 JSON 스니펫)가 있다
+- [ ] "매니페스트 없음", "PyPI 미등록 패키지", "비공개/접근 불가 저장소", "PyPI/OSV 조회 실패" 등 최소 4개 이상의 엣지케이스가 "상황 → 기대 동작(`partial`/`failed` 상태와 에러 코드)" 표로 정리되어 있다
+- [ ] 출력 스키마가 `schemas/collector_output.schema.json`과 필드 단위로 100% 일치한다
+- [ ] Risk Analyzer·ML 담당자 리뷰를 거쳐 설계 문서가 확정된다 (`docs/design/_cross_review_questions.md`에 반영된 사항 재확인)
 
 ## 출력 인터페이스
 
@@ -1617,37 +1618,38 @@ AI 에이전트 저장소를 스캔해서 (1) 의존성 목록, (2) LangChain·M
 # 원본: docs/epics/02-risk-analyzer.md
 # ============================================================
 
-# [Epic] Risk Analyzer 모듈 구현
+# [Epic] Risk Analyzer 설계 문서 완성
 
-담당: 위험분석 | 관련 모듈: Risk Analyzer | 라벨: `risk-analyzer`, `schema`, `feature`
+담당: 위험분석 | 관련 모듈: Risk Analyzer | 라벨: `risk-analyzer`, `schema`, `design`
 
 ## 목표
 
-Dependency Collector가 만든 SBOM·의존성 목록을 입력받아, 패키지별로 "패키지 자체 위험도(CVE/CVSS/EPSS + 타이포스쿼팅 + 유지보수 상태) × 에이전트 권한 가중치" 공식으로 위험 점수를 산출하고, 이를 표준 JSON으로 Attack Path Engine에 넘기는 것.
+Dependency Collector가 만든 SBOM·의존성 목록을 입력받아, 패키지별로 "패키지 자체 위험도(CVE/CVSS/EPSS + 타이포스쿼팅 + 유지보수 상태) × 에이전트 권한 가중치" 공식으로 위험 점수를 산출하는 로직의 **설계를 AI 구현 가능한 수준까지** 완성하는 것. 실제 스코어링 파이프라인 코드 작성은 이 Epic의 범위가 아니다.
 
 ## 범위
 
-**포함**
-- CVSS 기반 취약점 심각도 정규화 (Collector가 수집한 CVE/CVSS 값 활용)
-- EPSS(악용 예측 확률) API 연동 및 결합 로직
-- 타이포스쿼팅 탐지: 인기 패키지 top-N 대비 Levenshtein distance 기반 규칙 + 보조 신호(다운로드 수, 등록일)
-- 유지보수 상태 신호: 마지막 릴리즈일, 메인테이너 수 기반 staleness 점수
-- 에이전트 권한 등급(LOW/MEDIUM/HIGH) 승수 반영
-- 최종 위험 점수·등급을 `schemas/risk_score.schema.json` 형식으로 출력
+**포함 (`docs/design/02-risk-analyzer.md` 심화)**
+- CVSS 기반 취약점 심각도 정규화 공식과 계산 함수 시그니처
+- EPSS(악용 예측 확률) API 연동 절차 및 CVSS와의 결합 공식
+- 타이포스쿼팅 탐지: 인기 패키지 top-N 대비 Levenshtein distance 기준값과 보조 신호(다운로드 수, 등록일) 결합 규칙
+- 유지보수 상태 신호: 마지막 릴리즈일, 메인테이너 수 기반 staleness 점수 계산식
+- 에이전트 권한 등급(LOW/MEDIUM/HIGH) 승수 반영 공식
+- 최종 위험 점수·등급 산출 공식과 `schemas/risk_score.schema.json` 필드 매핑
 
 **제외 (범위 밖)**
 - ML 기반 신규/변종 악성 패키지 탐지 (ML 이상탐지 모듈 담당)
 - 의존성-권한-공격경로 그래프 구성 (Attack Path Engine 담당)
 - combosquatting(문자 치환형) 등 고급 타이포스쿼팅 규칙, 다국어/비-PyPI 생태계 지원 — v2 이후 별도 이슈로 분리
+- **실제 스코어링 파이프라인 코드 구현** — 설계 확정 이후 단계
 
 ## 완료 조건 (Acceptance Criteria)
 
-- [ ] `risk-analyzer/` 디렉토리에 스코어링 파이프라인 동작 (Collector 출력 JSON → risk_score.json)
-- [ ] CVSS·EPSS·타이포스쿼팅·staleness 4개 신호가 각각 독립 모듈로 분리되어 단위 테스트 가능
-- [ ] 최소 1개 실제 CVE 보유 패키지(예: 과거 취약점 있는 버전)로 점수 산출 검증
-- [ ] 타이포스쿼팅 탐지가 알려진 사례(colorama/colorizr류 이름)를 최소 1건 이상 정탐
-- [ ] `schemas/risk_score.schema.json` 초안 작성 및 Attack Path Engine 담당 리뷰·승인 완료 (GIT_POLICY.md CODEOWNERS 규칙)
-- [ ] Collector 출력에 필요한 필드(아래 입력 인터페이스)가 실제로 채워지는지 Collector 담당과 교차 확인
+- [ ] CVSS·EPSS·타이포스쿼팅·staleness·권한가중치 5개 계산 로직 각각의 함수 시그니처와 공식이 `docs/design/02-risk-analyzer.md`에 명시되어 있다
+- [ ] 각 계산 로직마다 최소 1개의 구체적 입력값 → 출력값 예시가 있다 (실제 CVE 보유 패키지 예시 포함)
+- [ ] 타이포스쿼팅 탐지 규칙이 알려진 사례(colorama/colorizr류 이름)를 예시로 검증되어 있다
+- [ ] "CVSS 값 없음", "EPSS 조회 실패", "메인테이너 정보 없음" 등 최소 3개 엣지케이스가 표로 정리되어 있다
+- [ ] `schemas/risk_score.schema.json`과 설계 문서의 공식·필드가 100% 일치하며 Attack Path Engine 담당 리뷰·승인 완료 (GIT_POLICY.md CODEOWNERS 규칙)
+- [ ] Collector 출력에서 필요한 입력 필드 목록이 Collector 설계 문서와 교차 확인되어 불일치가 없다
 
 ## 입력/출력 인터페이스
 
@@ -1680,36 +1682,37 @@ Dependency Collector가 만든 SBOM·의존성 목록을 입력받아, 패키지
 # 원본: docs/epics/03-ml-detector.md
 # ============================================================
 
-# [Epic] ML 이상탐지 (ml-detector) 모듈 구축
+# [Epic] ML 이상탐지 (ml-detector) 설계 문서 완성
 
 담당: ML탐지
 
 ## 목표
 
-Dependency Collector가 만든 SBOM/의존성 메타데이터를 입력받아, Risk Analyzer의 규칙 기반 탐지가 놓치는 **신규·변종 악성 패키지**를 메타데이터/텍스트/코드 특징 기반 분류 모델(Random Forest 베이스라인)로 탐지하고, 그 결과를 `ml_result.schema.json` 형식으로 Attack Path Engine에 전달한다.
+Dependency Collector가 만든 SBOM/의존성 메타데이터를 입력받아, Risk Analyzer의 규칙 기반 탐지가 놓치는 **신규·변종 악성 패키지**를 메타데이터/텍스트/코드 특징 기반 분류 모델(Random Forest 베이스라인)로 탐지하는 파이프라인의 **설계를 AI 구현 가능한 수준까지** 완성한다. 실제 모델 학습·추론 코드 작성은 이 Epic의 범위가 아니다.
 
 ## 범위
 
-**포함**
-- PyPI 메타데이터/배포 파일 기반 feature extraction 파이프라인
-- 공개 악성 패키지 데이터셋(DataDog `malicious-software-packages-dataset`, `lxyeternal/pypi_malregistry`) + 정상 패키지 목록으로 학습 데이터 구성
-- Random Forest 분류 모델 학습·평가·저장
-- Collector 출력을 입력으로 받아 추론 후 결과 JSON을 생성하는 inference 스크립트
-- `schemas/ml_result.schema.json` 초안 작성 및 Attack Path Engine 담당자 리뷰 반영
+**포함 (`docs/design/03-ml-detector.md` 심화)**
+- PyPI 메타데이터/배포 파일 기반 feature extraction 로직과 각 feature의 정의·계산식
+- 공개 악성 패키지 데이터셋(DataDog `malicious-software-packages-dataset`, `lxyeternal/pypi_malregistry`) + 정상 패키지 목록으로 학습 데이터를 구성하는 절차
+- Random Forest 분류 모델의 학습·평가 절차(하이퍼파라미터, 평가 지표 기준값 포함)
+- Collector 출력을 입력으로 받아 추론 결과 JSON을 생성하는 inference 절차의 함수 시그니처
+- `schemas/ml_result.schema.json` 필드와 모델 출력 매핑 확정
 
 **제외 (이번 학기 범위 밖)**
 - npm/RubyGems 등 PyPI 외 생태계 지원
 - 딥러닝/GNN 기반 고급 모델(참고자료에만 기록, 시간 남으면 향후 확장)
 - 실시간/온라인 학습(모델 재학습은 수동 배치로 진행)
+- **실제 모델 학습·추론 코드 구현** — 설계 확정 이후 단계
 
 ## 완료 조건 (Acceptance Criteria)
 
-- [ ] Feature extraction 스크립트가 Collector 출력(SBOM)에서 표 형태 feature vector를 생성한다
-- [ ] 학습 데이터셋(악성+정상)이 `ml-detector/data/`에 구성되고 다운로드/전처리 스크립트가 재현 가능하다
-- [ ] Random Forest 모델이 hold-out test set에서 **Recall(탐지율) ≥ 90%, False Positive Rate < 10%**를 만족한다 (미달 시 하이퍼파라미터/피처 조정 이력을 문서화)
-- [ ] 추론 스크립트가 임의의 Collector 출력에 대해 `ml_result.schema.json` 형식의 JSON을 생성한다
-- [ ] `schemas/ml_result.schema.json`이 Attack Path Engine 담당자의 승인(CODEOWNERS 리뷰)을 받아 병합된다
-- [ ] `ml-detector/README.md`에 실행 방법·모델 재학습 방법이 정리된다
+- [ ] Feature extraction 로직의 함수 시그니처와 각 feature 정의가 `docs/design/03-ml-detector.md`에 표로 정리되어 있다
+- [ ] 학습 데이터셋 구성 절차(다운로드처, 전처리 단계)가 재현 가능한 수준으로 문서화되어 있다
+- [ ] Random Forest 모델의 목표 평가 지표(Recall ≥ 90%, False Positive Rate < 10% 등)와 미달 시 대응 방침이 명시되어 있다
+- [ ] 추론 절차의 입력→출력 예시(Collector 출력 스니펫 → `ml_result.schema.json` 스니펫)가 최소 1개 있다
+- [ ] "feature 추출 실패", "학습 데이터에 없는 신규 패키지" 등 최소 2개 엣지케이스가 표로 정리되어 있다
+- [ ] `schemas/ml_result.schema.json`이 Attack Path Engine 담당자의 승인(CODEOWNERS 리뷰)을 받아 확정된다
 
 ## 입력/출력 인터페이스
 
@@ -1734,34 +1737,36 @@ Dependency Collector가 만든 SBOM/의존성 메타데이터를 입력받아, R
 # 원본: docs/epics/04-attack-path.md
 # ============================================================
 
-# Epic: Attack Path Engine 구축
+# Epic: Attack Path Engine 설계 문서 완성
 
 담당: 공격경로 / 시각화
 
 ## 목표
 
-Risk Analyzer의 위험 점수와 ML의 이상탐지 결과, 에이전트 권한 정보를 하나의 그래프로 연결해 "의존성 → 에이전트 → 권한 → 공격경로"를 추적하고, 개별로는 저위험인 이슈들이 결합해 실제로 악용 가능한 경로("toxic combination")를 식별·우선순위화한다. 최종적으로 이 경로를 의도적으로 취약하게 만든 테스트 에이전트(PoC)에서 재현해 침해 시나리오를 검증한다.
+Risk Analyzer의 위험 점수와 ML의 이상탐지 결과, 에이전트 권한 정보를 하나의 그래프로 연결해 "의존성 → 에이전트 → 권한 → 공격경로"를 추적하고, 개별로는 저위험인 이슈들이 결합해 실제로 악용 가능한 경로("toxic combination")를 식별·우선순위화하는 로직의 **설계를 AI 구현 가능한 수준까지** 완성한다. PoC 취약 에이전트 제작·실제 그래프 빌더 코드 구현은 이 Epic의 범위가 아니다.
 
 ## 범위
 
-- NetworkX 기반 그래프 빌더: Risk Analyzer/ML JSON → `DiGraph` 변환
-- 노드 타입(Package, Agent, Permission, Asset) / 엣지 타입(depends_on, grants, exposes 등) 스키마 확정
-- 가중치 기반 경로 탐색 알고리즘(`shortest_simple_paths` 등) 및 toxic combination 판정 로직
-- 경로 우선순위화(path_score 계산, 병목 노드 탐지)
-- 침해 시나리오 자연어 설명 생성
-- 취약 테스트 에이전트(PoC) 제작 및 경로 재현 검증
-- `schemas/attack_graph.schema.json` 초안 작성 및 Dashboard 담당과 리뷰·확정
-- Risk Analyzer·ML 담당과 입력 필드 계약 확정
+**포함 (`docs/design/04-attack-path.md` 심화)**
+- NetworkX 기반 그래프 빌더의 함수 시그니처: Risk Analyzer/ML JSON → `DiGraph` 변환 절차
+- 노드 타입(Package, Agent, Permission, Asset) / 엣지 타입(depends_on, grants, exposes 등) 스키마 확정 (완료 — `docs/design/_cross_review_questions.md` 참고)
+- 가중치 기반 경로 탐색 알고리즘(`shortest_simple_paths` 등)과 toxic combination 판정 로직을 의사코드 수준으로 서술
+- 경로 우선순위화(`path_score` 계산식, 병목 노드 탐지 기준) 공식화
+- 침해 시나리오 자연어 설명을 생성하는 규칙/템플릿 설계
+- PoC 취약 에이전트로 검증할 시나리오 목록 설계(제작 자체는 범위 밖)
+- `schemas/attack_graph.schema.json` 필드 확정 및 Dashboard 담당과 리뷰 (완료)
+- Risk Analyzer·ML 담당과 입력 필드 계약 확정 (완료)
 
-**범위 제외**: 실제 Neo4j 등 그래프 DB 도입, 프로덕션급 대규모 그래프 최적화, 실시간 그래프 갱신(본 프로젝트는 배치 처리 기준)
+**범위 제외**: 실제 Neo4j 등 그래프 DB 도입, 프로덕션급 대규모 그래프 최적화, 실시간 그래프 갱신(본 프로젝트는 배치 처리 기준), **그래프 빌더·PoC 에이전트 실제 코드/구현물 제작**
 
 ## 완료조건
 
-- [ ] Risk Analyzer·ML의 출력 스키마를 입력받아 그래프를 정상적으로 구성한다
-- [ ] 최소 1개 이상의 toxic combination 경로를 실제 테스트 데이터(또는 PoC 에이전트)에서 식별한다
-- [ ] 경로별 `path_score`로 우선순위가 매겨지고, 상위 경로에 대해 자연어 시나리오 설명이 생성된다
-- [ ] `schemas/attack_graph.schema.json`이 Dashboard 담당의 승인을 받아 병합된다 (GIT_POLICY 3항 CODEOWNERS 규칙)
-- [ ] PoC 취약 에이전트에서 설계한 경로가 실제로 재현됨을 시연한다
+- [ ] 그래프 빌더 함수 시그니처와 노드/엣지 생성 규칙이 `docs/design/04-attack-path.md`에 명시되어 있다
+- [ ] 경로 탐색·toxic combination 판정 알고리즘이 의사코드 수준으로 서술되어 있고, 최소 1개의 구체적 입력 그래프 → 출력 경로 예시가 있다
+- [ ] `path_score` 계산 공식이 명시되어 있고 예시로 검증되어 있다
+- [ ] "그래프에 고립 노드만 있는 경우", "toxic combination이 없는 경우" 등 최소 2개 엣지케이스가 표로 정리되어 있다
+- [ ] `schemas/attack_graph.schema.json`과 설계 문서의 필드가 100% 일치하며 Dashboard 담당의 승인을 받아 확정된다 (GIT_POLICY 3항 CODEOWNERS 규칙)
+- [ ] PoC 검증 시나리오 목록(어떤 취약점 조합을 어떤 순서로 재현할지)이 설계 문서에 정리되어 있다 — 실제 제작은 후속 단계
 
 ## 입력/출력 인터페이스
 
@@ -1792,33 +1797,33 @@ Risk Analyzer의 위험 점수와 ML의 이상탐지 결과, 에이전트 권한
 # 원본: docs/epics/05-dashboard.md
 # ============================================================
 
-# [Epic] Dashboard — 위험자산·공격경로 웹 시각화
+# [Epic] Dashboard 설계 문서 완성
 
 담당: 공격경로/시각화 · 최종 수정: 2026-09-06
 
 ## 목표
 
-Attack Path Engine이 만든 `attack_graph.json`(의존성→에이전트→권한→공격경로 그래프)을 지도교수·쿤텍 자문단이 웹 브라우저에서 바로 열어 "어떤 자산이 위험하고 왜 위험한지, 그 위험이 어떤 경로로 실제 피해까지 이어지는지"를 직관적으로 판단할 수 있는 인터랙티브 대시보드를 만든다. 파이프라인의 마지막 단계로, 이 프로젝트 전체의 설득력을 좌우하는 화면이다.
+Attack Path Engine이 만든 `attack_graph.json`(의존성→에이전트→권한→공격경로 그래프)을 지도교수·쿤텍 자문단이 웹 브라우저에서 바로 열어 "어떤 자산이 위험하고 왜 위험한지, 그 위험이 어떤 경로로 실제 피해까지 이어지는지"를 직관적으로 판단할 수 있는 인터랙티브 대시보드의 **설계를 AI 구현 가능한 수준까지** 완성한다. 실제 프론트엔드/백엔드 코드 작성은 이 Epic의 범위가 아니다.
 
 ## 범위
 
-- Cytoscape.js 기반 그래프 뷰(노드 타입별 스타일링, `dagre`/`cola` 레이아웃 전환)
-- risk_score 기준 필터링(슬라이더) 및 검색 기능
-- 위험 자산/공격경로 리스트 뷰(정렬 가능한 테이블) ↔ 그래프 하이라이트 연동
-- 노드/경로 클릭 시 상세 정보 패널(CVE, 버전, 권한명, 이상탐지 점수 등)
-- 얇은 FastAPI 백엔드: `data/<run_id>/attack_graph.json` 읽기 + 스키마 검증 + 정적 파일 서빙
-- PNG 내보내기(보고서용 캡처)
-- **범위 밖**: 실시간 스트리밍 업데이트, 다중 사용자 인증/권한 관리, 그래프 데이터 자체의 재계산(위험 점수는 Attack Path Engine이 이미 계산해서 넘겨줌 — Dashboard는 표시만 담당)
+**포함 (`docs/design/05-dashboard.md` 심화)**
+- Cytoscape.js 기반 그래프 뷰 설계(노드 타입별 스타일링 규칙, `dagre`/`cola` 레이아웃 전환 조건)
+- risk_score 기준 필터링(슬라이더)·검색 기능의 동작 규칙
+- 위험 자산/공격경로 리스트 뷰 ↔ 그래프 하이라이트 연동 방식
+- 노드/경로 클릭 시 상세 정보 패널에 표시할 타입별 필드 목록(CVE, 버전, 권한명, 이상탐지 점수 등)
+- 얇은 FastAPI 백엔드 API 설계: `data/<run_id>/attack_graph.json` 읽기 + 스키마 검증 + 정적 파일 서빙 엔드포인트 목록
+- PNG 내보내기 방식 설계
+
+**범위 밖**: 실시간 스트리밍 업데이트, 다중 사용자 인증/권한 관리, 그래프 데이터 자체의 재계산(위험 점수는 Attack Path Engine이 이미 계산해서 넘겨줌 — Dashboard는 표시만 담당), **실제 프론트엔드/백엔드 코드 구현**
 
 ## 완료 조건
 
-- [ ] `schemas/attack_graph.schema.json`을 만족하는 샘플 JSON으로 그래프가 렌더링된다
-- [ ] risk_score 슬라이더로 노드/엣지 필터링이 동작한다
-- [ ] 위험 경로 리스트에서 항목 클릭 시 해당 경로가 그래프에서 하이라이트된다
-- [ ] 노드 클릭 시 우측 패널에 상세 정보(타입별 필드)가 표시된다
-- [ ] `dashboard/tests/test_schema_validation.py`가 `schemas/attack_graph.schema.json` 검증을 통과한다
-- [ ] `python -m uvicorn` 한 줄 명령으로 로컬 실행 가능(빌드 도구 불필요)
-- [ ] 지도교수/쿤텍 대상 시연에서 "노드 클릭 → 상세정보 → 경로 하이라이트"까지 데모 가능
+- [ ] 그래프 뷰·필터링·리스트 연동·상세 패널, 각 기능의 동작 규칙이 `docs/design/05-dashboard.md`에 구체적으로(입력 이벤트 → 화면 변화) 서술되어 있다
+- [ ] `schemas/attack_graph.schema.json`을 만족하는 샘플 JSON 예시와 그 예시가 화면에 어떻게 렌더링되어야 하는지 매핑이 있다
+- [ ] FastAPI 백엔드의 엔드포인트 목록(경로, 메서드, 요청/응답 형식)이 명시되어 있다
+- [ ] "그래프가 비어있는 경우", "risk_score가 없는 노드" 등 최소 2개 엣지케이스가 표로 정리되어 있다
+- [ ] 지도교수/쿤텍 대상 시연 시나리오("노드 클릭 → 상세정보 → 경로 하이라이트")가 화면 흐름으로 문서화되어 있다
 
 ## 입력 인터페이스
 

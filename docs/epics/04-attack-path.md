@@ -1,31 +1,33 @@
-# Epic: Attack Path Engine 구축
+# Epic: Attack Path Engine 설계 문서 완성
 
 담당: 공격경로 / 시각화
 
 ## 목표
 
-Risk Analyzer의 위험 점수와 ML의 이상탐지 결과, 에이전트 권한 정보를 하나의 그래프로 연결해 "의존성 → 에이전트 → 권한 → 공격경로"를 추적하고, 개별로는 저위험인 이슈들이 결합해 실제로 악용 가능한 경로("toxic combination")를 식별·우선순위화한다. 최종적으로 이 경로를 의도적으로 취약하게 만든 테스트 에이전트(PoC)에서 재현해 침해 시나리오를 검증한다.
+Risk Analyzer의 위험 점수와 ML의 이상탐지 결과, 에이전트 권한 정보를 하나의 그래프로 연결해 "의존성 → 에이전트 → 권한 → 공격경로"를 추적하고, 개별로는 저위험인 이슈들이 결합해 실제로 악용 가능한 경로("toxic combination")를 식별·우선순위화하는 로직의 **설계를 AI 구현 가능한 수준까지** 완성한다. PoC 취약 에이전트 제작·실제 그래프 빌더 코드 구현은 이 Epic의 범위가 아니다.
 
 ## 범위
 
-- NetworkX 기반 그래프 빌더: Risk Analyzer/ML JSON → `DiGraph` 변환
-- 노드 타입(Package, Agent, Permission, Asset) / 엣지 타입(depends_on, grants, exposes 등) 스키마 확정
-- 가중치 기반 경로 탐색 알고리즘(`shortest_simple_paths` 등) 및 toxic combination 판정 로직
-- 경로 우선순위화(path_score 계산, 병목 노드 탐지)
-- 침해 시나리오 자연어 설명 생성
-- 취약 테스트 에이전트(PoC) 제작 및 경로 재현 검증
-- `schemas/attack_graph.schema.json` 초안 작성 및 Dashboard 담당과 리뷰·확정
-- Risk Analyzer·ML 담당과 입력 필드 계약 확정
+**포함 (`docs/design/04-attack-path.md` 심화)**
+- NetworkX 기반 그래프 빌더의 함수 시그니처: Risk Analyzer/ML JSON → `DiGraph` 변환 절차
+- 노드 타입(Package, Agent, Permission, Asset) / 엣지 타입(depends_on, grants, exposes 등) 스키마 확정 (완료 — `docs/design/_cross_review_questions.md` 참고)
+- 가중치 기반 경로 탐색 알고리즘(`shortest_simple_paths` 등)과 toxic combination 판정 로직을 의사코드 수준으로 서술
+- 경로 우선순위화(`path_score` 계산식, 병목 노드 탐지 기준) 공식화
+- 침해 시나리오 자연어 설명을 생성하는 규칙/템플릿 설계
+- PoC 취약 에이전트로 검증할 시나리오 목록 설계(제작 자체는 범위 밖)
+- `schemas/attack_graph.schema.json` 필드 확정 및 Dashboard 담당과 리뷰 (완료)
+- Risk Analyzer·ML 담당과 입력 필드 계약 확정 (완료)
 
-**범위 제외**: 실제 Neo4j 등 그래프 DB 도입, 프로덕션급 대규모 그래프 최적화, 실시간 그래프 갱신(본 프로젝트는 배치 처리 기준)
+**범위 제외**: 실제 Neo4j 등 그래프 DB 도입, 프로덕션급 대규모 그래프 최적화, 실시간 그래프 갱신(본 프로젝트는 배치 처리 기준), **그래프 빌더·PoC 에이전트 실제 코드/구현물 제작**
 
 ## 완료조건
 
-- [ ] Risk Analyzer·ML의 출력 스키마를 입력받아 그래프를 정상적으로 구성한다
-- [ ] 최소 1개 이상의 toxic combination 경로를 실제 테스트 데이터(또는 PoC 에이전트)에서 식별한다
-- [ ] 경로별 `path_score`로 우선순위가 매겨지고, 상위 경로에 대해 자연어 시나리오 설명이 생성된다
-- [ ] `schemas/attack_graph.schema.json`이 Dashboard 담당의 승인을 받아 병합된다 (GIT_POLICY 3항 CODEOWNERS 규칙)
-- [ ] PoC 취약 에이전트에서 설계한 경로가 실제로 재현됨을 시연한다
+- [ ] 그래프 빌더 함수 시그니처와 노드/엣지 생성 규칙이 `docs/design/04-attack-path.md`에 명시되어 있다
+- [ ] 경로 탐색·toxic combination 판정 알고리즘이 의사코드 수준으로 서술되어 있고, 최소 1개의 구체적 입력 그래프 → 출력 경로 예시가 있다
+- [ ] `path_score` 계산 공식이 명시되어 있고 예시로 검증되어 있다
+- [ ] "그래프에 고립 노드만 있는 경우", "toxic combination이 없는 경우" 등 최소 2개 엣지케이스가 표로 정리되어 있다
+- [ ] `schemas/attack_graph.schema.json`과 설계 문서의 필드가 100% 일치하며 Dashboard 담당의 승인을 받아 확정된다 (GIT_POLICY 3항 CODEOWNERS 규칙)
+- [ ] PoC 검증 시나리오 목록(어떤 취약점 조합을 어떤 순서로 재현할지)이 설계 문서에 정리되어 있다 — 실제 제작은 후속 단계
 
 ## 입력/출력 인터페이스
 

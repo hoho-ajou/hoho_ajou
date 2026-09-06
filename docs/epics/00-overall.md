@@ -4,27 +4,28 @@
 `[Epic] AASM 전체 파이프라인 오케스트레이션 및 schemas/ 계약 확립`
 
 ## 목표
-Collector → (Risk Analyzer, ML 병렬) → Attack Path Engine → Dashboard로 이어지는 5개 모듈이 실제로 데이터를 주고받으며 end-to-end로 동작하도록, 오케스트레이션 방식과 모듈 간 인터페이스(`schemas/`)를 확정한다.
+Collector → (Risk Analyzer, ML 병렬) → Attack Path Engine → Dashboard로 이어지는 5개 모듈이 실제로 데이터를 주고받을 수 있도록, 오케스트레이션 방식과 모듈 간 인터페이스(`schemas/`)를 **설계 문서 수준에서** 확정한다. 실제 구현(코드 작성)은 이 Epic의 범위가 아니며, 설계가 AI 구현체가 그대로 따라갈 수 있을 만큼 구체적인지가 완료 기준이다.
 
 ## 범위
 **이 Epic에서 다루는 것 (IN)**
-- `pipeline/` 오케스트레이터(각 모듈을 순서대로/병렬로 호출하는 얇은 CLI)의 구조 확정 및 최소 구현
-- `data/` 중간 산출물 디렉토리 규약(파일 네이밍, `run_id` 규칙)
-- `schemas/` 4개 파일의 존재 확정, 공통 메타 필드(`run_id`, `generated_at`, `source_module`, `schema_version`) 합의
-- 로깅·설정·테스트 등 프로젝트 전역 컨벤션 문서화 및 팀 합의
+- `pipeline/` 오케스트레이터(각 모듈을 순서대로/병렬로 호출하는 얇은 CLI)의 호출 흐름·에러 전파 방식을 의사코드 수준으로 설계
+- `data/` 중간 산출물 디렉토리 규약(파일 네이밍, `run_id` 규칙) 문서화
+- `schemas/` 4개 파일의 필드 확정, 공통 메타 필드(`run_id`, `generated_at`, `source_module`, `schema_version`) 합의 (이미 완료 — `docs/design/_cross_review_questions.md` 참고)
+- 로깅·설정·테스트 등 프로젝트 전역 컨벤션을 설계 문서에 명시
 - CODEOWNERS, 브랜치 전략 등 GIT_POLICY.md 내용의 실제 GitHub 설정 반영
 
-**이 Epic에서 다루지 않는 것 (모듈별 Epic으로 위임)**
+**이 Epic에서 다루지 않는 것 (모듈별 Epic으로 위임, 실제 코드 작성 전부 포함)**
 - 각 스키마 파일의 상세 필드 정의(Collector/Risk Analyzer/ML/Attack Path Engine 담당자가 각자 작성)
+- `pipeline/run.py` 등 실제 코드 구현 — 구현은 설계가 확정된 뒤 별도 단계
 - 각 모듈 내부 로직 구현(파싱 알고리즘, 점수화 공식, ML 모델, 그래프 생성 로직, 시각화 UI)
 - 클라우드 인프라(AWS EC2/S3/CloudWatch) 세부 구축
 
 ## 완료 조건
 - [ ] `docs/design/00-overall.md` 설계안이 팀 전체 리뷰 후 확정됨
-- [ ] `schemas/` 폴더에 4개 스키마 파일의 최소 스켈레톤(공통 메타 필드만 포함)이 생성되고 CODEOWNERS가 설정됨
-- [ ] `pipeline/run.py`가 더미(mock) 입출력으로라도 5개 모듈 호출 순서(병렬 fan-out/fan-in 포함)를 실제로 실행해 보임
-- [ ] 로깅/설정/테스트 컨벤션이 문서화되고 최소 1개 모듈에 시범 적용됨
-- [ ] 각 모듈 담당자가 자기 모듈의 하위 Epic/이슈를 이 Epic 산하에 생성함
+- [ ] `schemas/` 4개 스키마 파일이 필드 수준까지 확정되고 CODEOWNERS가 설정됨 (완료)
+- [ ] 오케스트레이션 흐름(호출 순서, 병렬 fan-out/fan-in, 각 단계 실패 시 처리 방식)이 `docs/design/00-overall.md`에 의사코드 또는 순서도 수준으로 문서화됨 — 실행 가능한 코드일 필요는 없음
+- [ ] 로깅/설정/테스트 컨벤션이 설계 문서에 명시됨
+- [ ] `docs/epics/06-open-decisions.md`의 팀 차원 결정 3건이 확정되어 이 문서에 반영됨
 
 ## 관련 모듈
 - Dependency Collector

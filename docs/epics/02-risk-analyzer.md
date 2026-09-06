@@ -1,34 +1,35 @@
-# [Epic] Risk Analyzer 모듈 구현
+# [Epic] Risk Analyzer 설계 문서 완성
 
-담당: 위험분석 | 관련 모듈: Risk Analyzer | 라벨: `risk-analyzer`, `schema`, `feature`
+담당: 위험분석 | 관련 모듈: Risk Analyzer | 라벨: `risk-analyzer`, `schema`, `design`
 
 ## 목표
 
-Dependency Collector가 만든 SBOM·의존성 목록을 입력받아, 패키지별로 "패키지 자체 위험도(CVE/CVSS/EPSS + 타이포스쿼팅 + 유지보수 상태) × 에이전트 권한 가중치" 공식으로 위험 점수를 산출하고, 이를 표준 JSON으로 Attack Path Engine에 넘기는 것.
+Dependency Collector가 만든 SBOM·의존성 목록을 입력받아, 패키지별로 "패키지 자체 위험도(CVE/CVSS/EPSS + 타이포스쿼팅 + 유지보수 상태) × 에이전트 권한 가중치" 공식으로 위험 점수를 산출하는 로직의 **설계를 AI 구현 가능한 수준까지** 완성하는 것. 실제 스코어링 파이프라인 코드 작성은 이 Epic의 범위가 아니다.
 
 ## 범위
 
-**포함**
-- CVSS 기반 취약점 심각도 정규화 (Collector가 수집한 CVE/CVSS 값 활용)
-- EPSS(악용 예측 확률) API 연동 및 결합 로직
-- 타이포스쿼팅 탐지: 인기 패키지 top-N 대비 Levenshtein distance 기반 규칙 + 보조 신호(다운로드 수, 등록일)
-- 유지보수 상태 신호: 마지막 릴리즈일, 메인테이너 수 기반 staleness 점수
-- 에이전트 권한 등급(LOW/MEDIUM/HIGH) 승수 반영
-- 최종 위험 점수·등급을 `schemas/risk_score.schema.json` 형식으로 출력
+**포함 (`docs/design/02-risk-analyzer.md` 심화)**
+- CVSS 기반 취약점 심각도 정규화 공식과 계산 함수 시그니처
+- EPSS(악용 예측 확률) API 연동 절차 및 CVSS와의 결합 공식
+- 타이포스쿼팅 탐지: 인기 패키지 top-N 대비 Levenshtein distance 기준값과 보조 신호(다운로드 수, 등록일) 결합 규칙
+- 유지보수 상태 신호: 마지막 릴리즈일, 메인테이너 수 기반 staleness 점수 계산식
+- 에이전트 권한 등급(LOW/MEDIUM/HIGH) 승수 반영 공식
+- 최종 위험 점수·등급 산출 공식과 `schemas/risk_score.schema.json` 필드 매핑
 
 **제외 (범위 밖)**
 - ML 기반 신규/변종 악성 패키지 탐지 (ML 이상탐지 모듈 담당)
 - 의존성-권한-공격경로 그래프 구성 (Attack Path Engine 담당)
 - combosquatting(문자 치환형) 등 고급 타이포스쿼팅 규칙, 다국어/비-PyPI 생태계 지원 — v2 이후 별도 이슈로 분리
+- **실제 스코어링 파이프라인 코드 구현** — 설계 확정 이후 단계
 
 ## 완료 조건 (Acceptance Criteria)
 
-- [ ] `risk-analyzer/` 디렉토리에 스코어링 파이프라인 동작 (Collector 출력 JSON → risk_score.json)
-- [ ] CVSS·EPSS·타이포스쿼팅·staleness 4개 신호가 각각 독립 모듈로 분리되어 단위 테스트 가능
-- [ ] 최소 1개 실제 CVE 보유 패키지(예: 과거 취약점 있는 버전)로 점수 산출 검증
-- [ ] 타이포스쿼팅 탐지가 알려진 사례(colorama/colorizr류 이름)를 최소 1건 이상 정탐
-- [ ] `schemas/risk_score.schema.json` 초안 작성 및 Attack Path Engine 담당 리뷰·승인 완료 (GIT_POLICY.md CODEOWNERS 규칙)
-- [ ] Collector 출력에 필요한 필드(아래 입력 인터페이스)가 실제로 채워지는지 Collector 담당과 교차 확인
+- [ ] CVSS·EPSS·타이포스쿼팅·staleness·권한가중치 5개 계산 로직 각각의 함수 시그니처와 공식이 `docs/design/02-risk-analyzer.md`에 명시되어 있다
+- [ ] 각 계산 로직마다 최소 1개의 구체적 입력값 → 출력값 예시가 있다 (실제 CVE 보유 패키지 예시 포함)
+- [ ] 타이포스쿼팅 탐지 규칙이 알려진 사례(colorama/colorizr류 이름)를 예시로 검증되어 있다
+- [ ] "CVSS 값 없음", "EPSS 조회 실패", "메인테이너 정보 없음" 등 최소 3개 엣지케이스가 표로 정리되어 있다
+- [ ] `schemas/risk_score.schema.json`과 설계 문서의 공식·필드가 100% 일치하며 Attack Path Engine 담당 리뷰·승인 완료 (GIT_POLICY.md CODEOWNERS 규칙)
+- [ ] Collector 출력에서 필요한 입력 필드 목록이 Collector 설계 문서와 교차 확인되어 불일치가 없다
 
 ## 입력/출력 인터페이스
 

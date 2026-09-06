@@ -1,33 +1,34 @@
-# [Epic] ML 이상탐지 (ml-detector) 모듈 구축
+# [Epic] ML 이상탐지 (ml-detector) 설계 문서 완성
 
 담당: ML탐지
 
 ## 목표
 
-Dependency Collector가 만든 SBOM/의존성 메타데이터를 입력받아, Risk Analyzer의 규칙 기반 탐지가 놓치는 **신규·변종 악성 패키지**를 메타데이터/텍스트/코드 특징 기반 분류 모델(Random Forest 베이스라인)로 탐지하고, 그 결과를 `ml_result.schema.json` 형식으로 Attack Path Engine에 전달한다.
+Dependency Collector가 만든 SBOM/의존성 메타데이터를 입력받아, Risk Analyzer의 규칙 기반 탐지가 놓치는 **신규·변종 악성 패키지**를 메타데이터/텍스트/코드 특징 기반 분류 모델(Random Forest 베이스라인)로 탐지하는 파이프라인의 **설계를 AI 구현 가능한 수준까지** 완성한다. 실제 모델 학습·추론 코드 작성은 이 Epic의 범위가 아니다.
 
 ## 범위
 
-**포함**
-- PyPI 메타데이터/배포 파일 기반 feature extraction 파이프라인
-- 공개 악성 패키지 데이터셋(DataDog `malicious-software-packages-dataset`, `lxyeternal/pypi_malregistry`) + 정상 패키지 목록으로 학습 데이터 구성
-- Random Forest 분류 모델 학습·평가·저장
-- Collector 출력을 입력으로 받아 추론 후 결과 JSON을 생성하는 inference 스크립트
-- `schemas/ml_result.schema.json` 초안 작성 및 Attack Path Engine 담당자 리뷰 반영
+**포함 (`docs/design/03-ml-detector.md` 심화)**
+- PyPI 메타데이터/배포 파일 기반 feature extraction 로직과 각 feature의 정의·계산식
+- 공개 악성 패키지 데이터셋(DataDog `malicious-software-packages-dataset`, `lxyeternal/pypi_malregistry`) + 정상 패키지 목록으로 학습 데이터를 구성하는 절차
+- Random Forest 분류 모델의 학습·평가 절차(하이퍼파라미터, 평가 지표 기준값 포함)
+- Collector 출력을 입력으로 받아 추론 결과 JSON을 생성하는 inference 절차의 함수 시그니처
+- `schemas/ml_result.schema.json` 필드와 모델 출력 매핑 확정
 
 **제외 (이번 학기 범위 밖)**
 - npm/RubyGems 등 PyPI 외 생태계 지원
 - 딥러닝/GNN 기반 고급 모델(참고자료에만 기록, 시간 남으면 향후 확장)
 - 실시간/온라인 학습(모델 재학습은 수동 배치로 진행)
+- **실제 모델 학습·추론 코드 구현** — 설계 확정 이후 단계
 
 ## 완료 조건 (Acceptance Criteria)
 
-- [ ] Feature extraction 스크립트가 Collector 출력(SBOM)에서 표 형태 feature vector를 생성한다
-- [ ] 학습 데이터셋(악성+정상)이 `ml-detector/data/`에 구성되고 다운로드/전처리 스크립트가 재현 가능하다
-- [ ] Random Forest 모델이 hold-out test set에서 **Recall(탐지율) ≥ 90%, False Positive Rate < 10%**를 만족한다 (미달 시 하이퍼파라미터/피처 조정 이력을 문서화)
-- [ ] 추론 스크립트가 임의의 Collector 출력에 대해 `ml_result.schema.json` 형식의 JSON을 생성한다
-- [ ] `schemas/ml_result.schema.json`이 Attack Path Engine 담당자의 승인(CODEOWNERS 리뷰)을 받아 병합된다
-- [ ] `ml-detector/README.md`에 실행 방법·모델 재학습 방법이 정리된다
+- [ ] Feature extraction 로직의 함수 시그니처와 각 feature 정의가 `docs/design/03-ml-detector.md`에 표로 정리되어 있다
+- [ ] 학습 데이터셋 구성 절차(다운로드처, 전처리 단계)가 재현 가능한 수준으로 문서화되어 있다
+- [ ] Random Forest 모델의 목표 평가 지표(Recall ≥ 90%, False Positive Rate < 10% 등)와 미달 시 대응 방침이 명시되어 있다
+- [ ] 추론 절차의 입력→출력 예시(Collector 출력 스니펫 → `ml_result.schema.json` 스니펫)가 최소 1개 있다
+- [ ] "feature 추출 실패", "학습 데이터에 없는 신규 패키지" 등 최소 2개 엣지케이스가 표로 정리되어 있다
+- [ ] `schemas/ml_result.schema.json`이 Attack Path Engine 담당자의 승인(CODEOWNERS 리뷰)을 받아 확정된다
 
 ## 입력/출력 인터페이스
 
