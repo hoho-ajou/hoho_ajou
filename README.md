@@ -23,10 +23,6 @@ AI 에이전트 프로젝트의 오픈소스 의존성을 자동 분석해, "의
 - 팀 차원 미결정 사항: [docs/epics/06-open-decisions.md](docs/epics/06-open-decisions.md)
 - 용어집(구현자용): [docs/glossary.md](docs/glossary.md)
 
-## AI 구현용 통합 피드 파일
-
-[AASM_FEED.md](AASM_FEED.md) — 위 모든 문서(정책+용어집+계약+설계+스키마+이슈)를 하나로 이어붙인 파일. 원본 파일을 고친 뒤에는 `bash scripts/build_feed.sh`를 다시 돌려서 재생성해야 합니다 (이 파일 자체는 직접 편집하지 않음).
-
 ## 학습 자료
 
 - [study_week1/](study_week1/) — 1주차 학습자료 (개념/용어/사례)
