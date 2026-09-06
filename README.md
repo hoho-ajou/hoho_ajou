@@ -22,8 +22,3 @@ AI 에이전트 프로젝트의 오픈소스 의존성을 자동 분석해, "의
 - 이슈/PR 공통 스키마: [docs/contracts/epic_schema.md](docs/contracts/epic_schema.md), [subissue_schema.md](docs/contracts/subissue_schema.md), [pr_schema.md](docs/contracts/pr_schema.md)
 - 팀 차원 미결정 사항: [docs/epics/06-open-decisions.md](docs/epics/06-open-decisions.md)
 - 용어집(구현자용): [docs/glossary.md](docs/glossary.md)
-
-## 학습 자료
-
-- [study_week1/](study_week1/) — 1주차 학습자료 (개념/용어/사례)
-- [resources/curated_list.md](resources/curated_list.md) — 참고자료 182개 큐레이션
