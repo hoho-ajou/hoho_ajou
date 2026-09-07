@@ -13,7 +13,12 @@
 | `dashboard/` | Dashboard — 웹 시각화 (Cytoscape.js) | [docs/design/05-dashboard.md](docs/design/05-dashboard.md) |
 | `schemas/` | 모듈 간 데이터 계약 (JSON Schema) | — |
 
-전체 설계: [docs/design/00-overall.md](docs/design/00-overall.md)
+전체 설계: [docs/design/00-overall.md](docs/design/00-overall.md) · [아키텍처 도면](docs/design/architecture_diagram.md)
+
+## 모듈 간 연결
+
+- 공통 샘플 데이터셋(4개 모듈 전부가 참조하는 하나의 예시): [docs/contracts/sample_dataset.md](docs/contracts/sample_dataset.md)
+- 인터페이스 맵(필드가 어디로 흘러가는지 한 페이지 정리): [docs/contracts/interface_map.md](docs/contracts/interface_map.md)
 
 ## 운영 정책
 
