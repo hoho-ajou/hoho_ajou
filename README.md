@@ -23,7 +23,6 @@
 ## 운영 정책
 
 - Git 브랜치/PR/이슈 정책: [GIT_POLICY.md](GIT_POLICY.md)
-- 교차검토 결정 이력: [docs/design/_cross_review_questions.md](docs/design/_cross_review_questions.md)
 - 이슈/PR 공통 스키마: [docs/contracts/epic_schema.md](docs/contracts/epic_schema.md), [subissue_schema.md](docs/contracts/subissue_schema.md), [pr_schema.md](docs/contracts/pr_schema.md)
 - 팀 차원 미결정 사항: [docs/epics/06-open-decisions.md](docs/epics/06-open-decisions.md)
 - 용어집(구현자용): [docs/glossary.md](docs/glossary.md)

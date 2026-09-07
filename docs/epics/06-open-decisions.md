@@ -1,6 +1,6 @@
 # [Epic] 팀 차원 결정 사항 정리 (총괄 소유)
 
-`docs/design/_cross_review_questions.md` §"총괄(PM)이 팀 차원에서 정리해야 할 것"에서 나온 항목들. 모듈 하나에 속하지 않고 전체 파이프라인에 영향을 주므로 총괄이 결정을 조율합니다. `docs/contracts/epic_schema.md` 형식이 아니라 **결정 기록(decision record)** 형식을 씁니다 — 구현 작업이 아니라 "선택"이 산출물이기 때문입니다.
+모듈 하나에 속하지 않고 전체 파이프라인에 영향을 주는 팀 차원 결정 항목들. 총괄이 결정을 조율합니다. `docs/contracts/epic_schema.md` 형식이 아니라 **결정 기록(decision record)** 형식을 씁니다 — 구현 작업이 아니라 "선택"이 산출물이기 때문입니다.
 
 ## 결정 1 — 공통 메타 필드(`run_id`, `schema_version`) 4개 스키마 전부 강제 여부
 

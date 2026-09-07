@@ -28,7 +28,6 @@ AI 에이전트 저장소를 스캔해서 (1) 의존성 목록, (2) LangChain·M
 - `docs/contracts/sample_dataset.md` — 전 모듈 공통 예시 시나리오
 - `docs/contracts/interface_map.md` — 필드 단위 흐름 정리
 - `schemas/collector_output.schema.json` — CODEOWNERS 대상 (Risk Analyzer·ML 승인 필요)
-- `docs/design/_cross_review_questions.md` — 교차검토 결정 이력
 
 ## 담당 문서
 
