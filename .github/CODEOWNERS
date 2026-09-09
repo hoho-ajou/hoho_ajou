@@ -3,13 +3,13 @@
 # 팀원이 확정되는 대로 아래 placeholder를 실제 GitHub 아이디로 교체하세요
 # (placeholder는 GitHub이 실제 사용자로 해석하지 못해 리뷰어 자동 지정이 동작하지 않습니다).
 
-/schemas/collector_output.schema.json   @R1 @R2 @R3
+/schemas/collector_output.schema.json   @baeseungwon1010 @R2 @R3
 /schemas/risk_score.schema.json         @R2 @R4
 /schemas/ml_result.schema.json          @R3 @R4
 /schemas/attack_graph.schema.json       @R4
 
 # 모듈 코드 디렉토리는 아직 없음(설계 검토 단계) — 구현 시작 시 아래 형태로 추가:
-# /collector/       @R1
+# /collector/       @baeseungwon1010
 # /risk-analyzer/   @R2
 # /ml-detector/     @R3
 # /attack-path/     @R4
