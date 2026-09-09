@@ -18,7 +18,7 @@ body:
     id: parent_role_issue
     attributes:
       label: 상위 이슈
-      description: "본인 역할(R1~R4) 상위 이슈 번호. 예: Relates to #8"
+      description: "본인 역할(R1~R4) 상위 이슈 번호. 예: Relates to #9"
       placeholder: "Relates to #"
     validations:
       required: true

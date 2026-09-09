@@ -4,13 +4,13 @@
 
 | # | 제목 | 담당 | 상태 |
 |---|---|---|---|
-| [#1](https://github.com/hoho-ajou/hoho_ajou/issues/1) | AASM 전체 설계 및 구현 조율 (Epic) | 총괄 | OPEN |
-| — | [R1] Dependency Collector 설계 | 배승원 | OPEN |
-| — | [R2] Risk Analyzer 설계 | (미정) | OPEN |
-| — | [R3] ML 이상탐지 설계 | (미정) | OPEN |
-| — | [R4] Attack Path Engine + Dashboard 설계 | (미정) | OPEN |
+| [#1](https://github.com/hoho-ajou/hoho_ajou/issues/1) | AASM 전체 설계 및 구현 조율 (Epic) | 배승원(총괄) | OPEN |
+| [#9](https://github.com/hoho-ajou/hoho_ajou/issues/9) | [R1] Dependency Collector 설계 | 배승원 | OPEN |
+| [#10](https://github.com/hoho-ajou/hoho_ajou/issues/10) | [R2] Risk Analyzer 설계 | (미정) | OPEN |
+| [#11](https://github.com/hoho-ajou/hoho_ajou/issues/11) | [R3] ML 이상탐지 설계 | (미정) | OPEN |
+| [#12](https://github.com/hoho-ajou/hoho_ajou/issues/12) | [R4] Attack Path Engine + Dashboard 설계 | (미정) | OPEN |
 
-R1~R4 상위 이슈는 `docs/roles/*.md`가 원본이며, 실제 GitHub Issue로 옮기면 이 표의 `#` 칸에 번호를 채웁니다.
+R1~R4 상위 이슈는 `docs/roles/*.md`가 원본입니다.
 
 ## 상태 값
 
