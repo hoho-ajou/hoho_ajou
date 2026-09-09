@@ -7,7 +7,7 @@
 | 용어 | 정의 |
 |---|---|
 | **run_id** | 파이프라인 한 번의 전체 실행을 식별하는 ID. Collector가 생성해서 이후 모든 모듈 출력에 그대로 전달됨 |
-| **schema_version** | 각 `schemas/*.json` 파일의 버전 문자열. 필드 추가/변경 시 올림 (`GIT_POLICY.md` §3) |
+| **schema_version** | 각 `schemas/*.json` 파일의 버전 문자열. 필드 추가/변경 시 올림 (`CONTRIBUTING.md` §3) |
 | **파일 기반 핸드오프** | 모듈 간 통신을 API 호출이 아니라 JSON 파일 쓰기/읽기로 하는 방식(`00-overall.md` §2). 각 모듈은 독립 실행 가능해야 함 |
 | **CODEOWNERS 대상 파일** | `schemas/*.json`처럼 변경 시 관련 모듈 담당자 전원의 승인이 강제되는 파일 |
 

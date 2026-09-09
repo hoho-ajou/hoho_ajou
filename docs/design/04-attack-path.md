@@ -98,6 +98,8 @@ attack-path/
 
 ## 확정 사항 (교차검토 반영)
 
+> ⚠️ **시뮬레이션 초안**: 아래는 실제 팀 교차검토가 아니라 여러 모듈 관점을 미리 가정해서 만든 초안입니다. 실제 담당자와 교차검토 후 다르게 결론 나면 그 내용으로 갱신하세요 (근거는 `docs/review/decisions/0X-*.md`에).
+
 **1. Permission 데이터 출처 (팀 전체 결정, 최중요):** 제시된 (a)/(b)/(c) 중 하나가 아니라 **(a)+(c) 혼합**을 채택합니다. Collector가 에이전트 코드를 정적 스캔하는 유일한 모듈이므로 실제 "이 에이전트가 이 권한을 행사한다"는 사실(`agent.permissions[]`: 권한 타입 + 대상 자산 문자열)은 Collector가 코드 스캔으로 채워 넣고, 그 필드의 **enum·구조 자체는 Attack Path Engine이 정의**합니다(그래프 노드/엣지로 직접 소비하는 쪽이 스키마를 소유해야 이후 그래프 빌더 변경 시 마찰이 없기 때문). Risk Analyzer·ML은 이 필드를 만들지 않고 참조만 합니다. Collector 담당자에게 `agent.permissions[]` 필드 추가를 요청 예정.
 
 **2. 출력 형식 (Q15):** Dashboard 설계서(`05-dashboard.md` §5)가 이미 `nodes/edges/paths` 구조로 스키마를 확정했으므로 Cytoscape `elements:{nodes,edges}` 포맷으로 바꾸지 않습니다. Cytoscape 변환은 프론트엔드(`graphView.js`)가 로드 시 수행합니다.

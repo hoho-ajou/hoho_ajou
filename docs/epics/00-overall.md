@@ -1,41 +1,33 @@
-# [Epic] 전체 파이프라인 오케스트레이션 & 모듈 간 계약 확립
+# [Epic] AASM 전체 설계 및 구현 조율
 
 ## 목표
 
-Collector → (Risk Analyzer, ML 병렬) → Attack Path Engine → Dashboard로 이어지는 5개 모듈이 실제로 데이터를 주고받을 수 있도록, 오케스트레이션 방식과 모듈 간 인터페이스를 **설계 문서 수준에서** 확정한다. 실제 구현(코드 작성)은 이 Epic의 범위가 아니며, 설계가 AI 구현체가 그대로 따라갈 수 있을 만큼 구체적인지가 완료 기준이다.
+5개 모듈(Collector·Risk Analyzer·ML 이상탐지·Attack Path Engine·Dashboard)이 실제로 이어지는 하나의 파이프라인이 되도록 설계·조율한다. 이 Epic 하나가 전체 프로젝트를 담당하며, R1~R4가 각자 모듈을 맡아 그 안에서 작업한다.
 
 ## 범위
 
-**IN**
-- `pipeline/` 오케스트레이터의 호출 흐름·에러 전파 방식을 의사코드 수준으로 설계
-- `data/` 중간 산출물 디렉토리 규약(파일 네이밍, `run_id` 규칙) 문서화
-- 로깅·설정·테스트 등 프로젝트 전역 컨벤션 명시
-- CODEOWNERS, 브랜치 전략 등 GIT_POLICY.md 내용의 실제 GitHub 설정 반영
+**포함**: 오케스트레이션 방식(모듈 호출 순서·오류 처리), 중간 산출물 저장 규약, 프로젝트 전역 컨벤션, R1~R4 간 조율, 팀 차원 결정 사항(공통 메타 필드 강제 여부, pipeline 코드 소유권, 데이터 저장 위치 등).
 
-**OUT** (모듈별 Epic으로 위임, 실제 코드 작성 전부 포함)
-- 각 스키마 파일의 상세 필드 정의(각 모듈 담당자가 자기 Epic에서 작성)
-- `pipeline/run.py` 등 실제 코드 구현
-- 각 모듈 내부 로직 구현
-- 클라우드 인프라(AWS EC2/S3/CloudWatch) 세부 구축
+**제외**: 각 모듈 내부 로직(R1~R4가 직접 설계), 실제 코드 구현.
 
 ## 완료조건
 
-- [ ] `docs/design/00-overall.md` 설계안이 팀 전체 리뷰 후 확정됨
-- [ ] 오케스트레이션 흐름(호출 순서, 병렬 fan-out/fan-in, 각 단계 실패 시 처리 방식)이 의사코드 또는 순서도 수준으로 문서화됨
-- [ ] 로깅/설정/테스트 컨벤션이 설계 문서에 명시됨
-- [ ] `docs/epics/06-open-decisions.md`의 팀 차원 결정 사항이 확정되어 이 문서에 반영됨
+- [ ] 오케스트레이션 흐름이 문서화되어 있다
+- [ ] R1~R4가 각자 모듈 설계를 마친 뒤, 전체가 실제로 이어지는지 맞춰봤다
+- [ ] 팀 차원 결정 사항이 확정되어 결정 기록에 반영됐다
 
-## 공통계약
+판정 기준(스키마 필드 일치 등)은 [`docs/governance/REVIEW_CHECKLIST.md`](../governance/REVIEW_CHECKLIST.md) 참고.
 
-- `docs/contracts/sample_dataset.md` — 전 모듈 공통 예시 시나리오
-- `docs/contracts/interface_map.md` — 필드 단위 흐름 정리
-- `schemas/*.schema.json` 4개 — 공통 메타 필드(`run_id`, `schema_version` 등) 강제 여부는 `docs/epics/06-open-decisions.md` 결정 1 참고
-- `GIT_POLICY.md` — 브랜치/이슈/PR 정책
-- `docs/contracts/*.md` — 이슈/PR 공통 스키마
+## 참고 자료 (강제 아님 — 출발점)
+
+- `docs/design/00-overall.md` — DRAFT(팀 검토 전)
+- `docs/contracts/sample_dataset.md`, `docs/review/decisions/00-overall.md` — 역시 시뮬레이션 초안
+- 역할별 목표/범위: [`docs/governance/OWNERSHIP.md`](../governance/OWNERSHIP.md)
 
 ## 담당 문서
 
 `docs/design/00-overall.md`
+결정 기록: [`docs/review/decisions/00-overall.md`](../review/decisions/00-overall.md)
 
 ## 하위 이슈
 (담당자가 프로젝트 진행 상황에 맞춰 직접 세분화하여 생성 예정 — 여기서는 만들지 않습니다)

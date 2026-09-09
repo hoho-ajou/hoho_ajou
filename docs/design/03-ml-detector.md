@@ -86,9 +86,11 @@ ml-detector/
 }
 ```
 
-이 스키마는 DRAFT이며 Attack Path Engine 담당자의 검토·승인 후 `schemas/ml_result.schema.json`으로 확정한다(`GIT_POLICY.md` 4번 CODEOWNERS 규칙에 따름).
+이 스키마는 DRAFT이며 Attack Path Engine 담당자의 검토·승인 후 `schemas/ml_result.schema.json`으로 확정한다(`CONTRIBUTING.md` 4번 CODEOWNERS 규칙에 따름).
 
 ## 확정 사항 (교차검토 반영)
+
+> ⚠️ **시뮬레이션 초안**: 아래는 실제 팀 교차검토가 아니라 여러 모듈 관점을 미리 가정해서 만든 초안입니다. 실제 담당자와 교차검토 후 다르게 결론 나면 그 내용으로 갱신하세요 (근거는 `docs/review/decisions/0X-*.md`에).
 
 **Q10. `triggered_features` 구조 (Attack Path Engine 질문 10):**
 현재 `{ feature, value, importance }` 배열 형태를 그대로 그래프 노드 속성으로 사용 가능하다고 판단, 재구성 불필요. 다만 그래프 렌더링·Dashboard 표시 편의를 위해 다음을 확정한다: (1) 배열은 `importance` 내림차순 정렬 상태로 출력, (2) 노드 속성 과다 방지를 위해 상위 5개로 cap, (3) 필드명은 그대로 `feature`(string) / `value`(any) / `importance`(0~1 float) 유지. Attack Path Engine은 이 배열을 노드의 `attributes.ml_triggered_features`로 그대로 매핑하면 된다.

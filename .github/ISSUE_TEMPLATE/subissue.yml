@@ -1,0 +1,57 @@
+name: 하위 이슈 (Sub-issue)
+description: 역할 상위 이슈(R1~R4)를 실행 단위로 쪼갠 작업. 담당자가 직접 작성합니다.
+title: "[모듈] "
+body:
+  - type: dropdown
+    id: module
+    attributes:
+      label: 모듈
+      options:
+        - Dependency Collector (R1)
+        - Risk Analyzer (R2)
+        - ML 이상탐지 (R3)
+        - Attack Path Engine + Dashboard (R4)
+        - PM/전체
+    validations:
+      required: true
+  - type: input
+    id: parent_role_issue
+    attributes:
+      label: 상위 이슈
+      description: "본인 역할(R1~R4) 상위 이슈 번호. 예: Relates to #8"
+      placeholder: "Relates to #"
+    validations:
+      required: true
+  - type: textarea
+    id: work
+    attributes:
+      label: 작업 내용
+      description: 어떤 파일/함수/클래스를 만들거나 고치는지 구체적으로. "파서 구현"이 아니라 "collector/parsers/requirements_txt.py에 parse(path:str)->list[Dependency] 구현" 수준으로.
+    validations:
+      required: true
+  - type: textarea
+    id: io_example
+    attributes:
+      label: 입력/출력 예시
+      description: 최소 1개의 구체적인 입력값 → 출력값 예시. 관련 schemas/*.schema.json 필드를 명시.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 완료조건 (Acceptance Criteria)
+      description: 테스트 가능한 조건. 가능하면 테스트 케이스명/커맨드까지.
+    validations:
+      required: true
+  - type: textarea
+    id: edge_cases
+    attributes:
+      label: 엣지케이스
+      description: "최소 2개. '상황 → 기대 동작' 형태로."
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: 참고자료
+      description: 관련 docs/design/0X-*.md 절 번호 등.

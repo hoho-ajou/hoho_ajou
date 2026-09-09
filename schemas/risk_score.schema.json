@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "RiskScoreOutput",
-  "description": "Risk Analyzer 모듈 출력. CODEOWNERS: @위험분석담당 @공격경로담당",
+  "description": "[DRAFT — 담당자 실제 설계로 변경 가능] Risk Analyzer 모듈 출력. CODEOWNERS: @위험분석담당 @공격경로담당",
   "type": "object",
   "required": ["generated_at", "packages"],
   "properties": {

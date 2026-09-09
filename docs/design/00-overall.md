@@ -4,7 +4,7 @@
 
 ## 1. 저장소 구조 근거
 
-`GIT_POLICY.md`가 이미 모노레포 구조(`collector/ risk-analyzer/ ml-detector/ attack-path/ dashboard/ schemas/ docs/`)를 확정했습니다. 4인 학부 프로젝트에서 멀티레포는 버전 동기화·CI 중복 설정 비용이 이득보다 큽니다. 여기에 다음을 추가 제안합니다.
+`CONTRIBUTING.md`가 이미 모노레포 구조(`collector/ risk-analyzer/ ml-detector/ attack-path/ dashboard/ schemas/ docs/`)를 확정했습니다. 4인 학부 프로젝트에서 멀티레포는 버전 동기화·CI 중복 설정 비용이 이득보다 큽니다. 여기에 다음을 추가 제안합니다.
 
 ```
 aasm/
@@ -48,7 +48,7 @@ aasm/
 - `ml_result.schema.json` — 패키지별 이상탐지 스코어/라벨. Attack Path Engine 입력의 나머지 절반.
 - `attack_graph.schema.json` — 노드(의존성/에이전트/권한)와 엣지(연결)로 구성된 그래프. Dashboard 입력.
 
-각 스키마는 최소 `run_id`, `generated_at`, `source_module`, `schema_version` 공통 메타 필드를 갖도록 통일할 것을 제안합니다. 상세 필드는 module owner가 정의하되, `schemas/` 변경은 GIT_POLICY.md의 CODEOWNERS 규칙(만드는 사람+받는 사람 전원 승인)을 그대로 따릅니다.
+각 스키마는 최소 `run_id`, `generated_at`, `source_module`, `schema_version` 공통 메타 필드를 갖도록 통일할 것을 제안합니다. 상세 필드는 module owner가 정의하되, `schemas/` 변경은 CONTRIBUTING.md의 CODEOWNERS 규칙(만드는 사람+받는 사람 전원 승인)을 그대로 따릅니다.
 
 ## 4. 프로젝트 공통 컨벤션
 

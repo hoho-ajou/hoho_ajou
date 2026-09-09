@@ -1,6 +1,6 @@
 # 기술 설계 문서 — Dependency Collector (`collector/`)
 
-> 관련 자료: `study_week1/README.md` §5, `architecture.html` #collector, `GIT_POLICY.md` §3(스키마 계약)
+> 관련 자료: `study_week1/README.md` §5, `architecture.html` #collector, `CONTRIBUTING.md` §3(스키마 계약)
 
 ## 1. 모듈 구조 (제안)
 
@@ -92,9 +92,11 @@ collector/
 }
 ```
 
-이 문서는 DRAFT이며, `GIT_POLICY.md` 규칙에 따라 `schemas/collector_output.schema.json`으로 확정하려면 Risk Analyzer·ML 담당자 승인이 필요합니다.
+이 문서는 DRAFT이며, `CONTRIBUTING.md` 규칙에 따라 `schemas/collector_output.schema.json`으로 확정하려면 Risk Analyzer·ML 담당자 승인이 필요합니다.
 
 ## 확정 사항 (교차검토 반영)
+
+> ⚠️ **시뮬레이션 초안**: 아래는 실제 팀 교차검토가 아니라 여러 모듈 관점을 미리 가정해서 만든 초안입니다. 실제 담당자와 교차검토 후 다르게 결론 나면 그 내용으로 갱신하세요 (근거는 `docs/review/decisions/0X-*.md`에).
 
 1. **`cvss_base_score` 인라인 제공 (Risk Analyzer Q1)** — 예. OSV 응답의 `severity`(CVSS 벡터)를 파싱해 `cvss_base_score`(숫자) + `cvss_source`(`nvd`/`osv` 등)로 `vulnerabilities[]`에 직접 포함합니다. 파싱 불가 시 `cvss_base_score: null`.
 2. **`external_integrations[]` 필드 추가 (Risk Analyzer Q2)** — 예. 5단계 외부 연동 탐지 결과를 패키지 단위로도 태깅해 각 dependency에 `external_integrations: ["network"|"shell"|"mcp"|"filesystem"]` 배열을 추가합니다. (기존 top-level `integrations[]`는 유지, 이건 패키지-연동 매핑용.)
