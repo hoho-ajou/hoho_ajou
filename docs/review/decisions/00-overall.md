@@ -24,46 +24,41 @@
 
 **결정하려 했던 것**: 어떤 패키지 레지스트리, 어떤 AI 에이전트 프레임워크를 분석 대상으로 삼을지. (팀 계획서 §4 "대상 범위 확정(PyPI+에이전트 1종)"의 실제 내용)
 
-**전제**: 에이전트 프레임워크마다 도구 선언 방식(데코레이터/클래스/설정파일), import 네임스페이스, 연동 표준이 전부 달라 범용 탐지기를 만들기 어렵다. 4인 학부 프로젝트 규모에서는 여러 조합을 동시에 지원할 수 없어 하나로 고정해야 한다.
+**전제**: 에이전트 프레임워크마다 도구 선언 방식·설정파일 구조가 전부 달라 범용 탐지기를 만들기 어렵다. 4인 학부 프로젝트 규모에서는 하나로 고정해야 한다.
 
 #### 2-1. 레지스트리: PyPI vs npm
 
 | 기준 | PyPI | npm |
 |---|---|---|
-| AI 에이전트 생태계 연관성 | LangChain 등 주요 프레임워크의 원조 언어(아래 2-2 참고, 후보 7개 중 6개가 Python 기반) | 부차적 버전만 존재 |
-| 실제 공급망 공격 사례 | "Mini Shai-Hulud" 웜(2026년 5월)이 PyPI의 `mistralai`(Mistral AI 공식 SDK), `guardrails-ai`를 악성 버전으로 감염시켜 PyPI가 두 프로젝트를 격리 조치함[^1] | 웜의 최초 발원지(npm 패키지 170개+ 감염) — 사례 총량은 더 크지만 물량 공세형이라 개별 패키지 맥락 분석 가치는 상대적으로 낮음 |
-| 데이터 접근성 | PyPI JSON API(메타데이터+취약점) + OSV로 보완 용이 | 별도 조사 필요 |
-| ML 학습용 악성 샘플 | `lxyeternal/pypi_malregistry`(PyPI 전용, 10,000+건) 확보 | PyPI 전용만큼 딱 맞는 데이터셋 없음 |
-| 팀 스택 정합성 | Collector/Risk Analyzer/ML을 Python 3.11+로 통일한 것과 일치 | 스택 통일 방침과 어긋남 |
+| AI 에이전트 생태계 연관성 | LangChain 등 주요 프레임워크의 원조 언어 | 부차적 버전만 존재 |
+| 실제 공급망 공격 사례 | "Mini Shai-Hulud" 웜(2026년 5월)이 `mistralai`, `guardrails-ai`를 악성 버전으로 감염시켜 PyPI가 두 프로젝트를 격리 조치함[^1] | 웜의 최초 발원지(170개+ 감염) — 총량은 크지만 물량 공세형 |
+| 데이터 접근성 | PyPI JSON API + OSV로 보완 용이 | 별도 조사 필요 |
+| ML 학습용 악성 샘플 | `lxyeternal/pypi_malregistry`(PyPI 전용, 10,000+건) | 딱 맞는 데이터셋 없음 |
+| 팀 스택 정합성 | Python 3.11+ 통일과 일치 | 어긋남 |
 
-**근거**: 실제 공격 사례 총량은 npm이 크지만, 나머지 4개 기준(생태계 연관성·데이터 접근성·ML 샘플·스택 정합성)이 전부 PyPI를 가리키고, 이 4개가 "이번 학기 안에 파이프라인을 끝까지 완성할 수 있는가"와 직결되는 실행 가능성 기준이다.
-
-**참고**: `mistralai`/`guardrails-ai`는 LangChain 기반 패키지가 아니다 — 이 사례는 PyPI 선정 근거로만 쓰고 2-2(LangChain 선정)에는 쓰지 않는다.
+**근거**: 공격 사례 총량은 npm이 크지만, 나머지 4개 기준이 전부 PyPI를 가리키고 이번 학기 실행 가능성과 직결된다.
 
 #### 2-2. 에이전트 프레임워크: LangChain vs 후보군
 
-후보: LangChain, LlamaIndex, CrewAI, AutoGen, Semantic Kernel, OpenHands, Haystack (AI 에이전트 개발에 쓰이는 대표 프레임워크)
+후보: LangChain, LlamaIndex, CrewAI, AutoGen, Semantic Kernel, OpenHands, Haystack
 
 | 기준 | LangChain | 나머지 6개 |
 |---|---|---|
-| 언어/생태계 | Python(PyPI) 기반 — JS 버전은 부차적 | 6개 중 Semantic Kernel 제외 전부 Python(PyPI) 전용이거나 부차적 |
-| 범용성 | 범용(도구+메모리+에이전트) | RAG 특화(LlamaIndex, Haystack) 또는 멀티에이전트 오케스트레이션 특화(CrewAI, AutoGen) 또는 협소한 용도(코딩 전용 OpenHands) |
-| MCP 공식 지원 여부 | 공식 어댑터 패키지 `langchain-mcp-adapters`(PyPI 실존 확인) + LangChain 1.4.0부터 `langchain[mcp]` extra 네이티브 지원(2026-09 PyPI JSON API 직접 조회로 확인) | 개별 확인 안 함(범용성 기준에서 이미 제외되는 후보들이라 우선순위 낮음) |
-| 대표성/인기도(GitHub 스타 수, 2026-09 실측) | **146,273** | OpenHands 87,828 · AutoGen 60,975 · CrewAI 58,500 · LlamaIndex 52,153 · Semantic Kernel 28,556 · Haystack 26,506 — 전부 LangChain의 60% 미만 |
-| 학습 자료 풍부함 | 스타 수 격차로 미루어 판단(정성적 추정, 별도 측정은 안 함) | 상대적으로 적을 것으로 추정 |
+| 언어/생태계 | Python(PyPI) | LlamaIndex·CrewAI·AutoGen·Haystack: Python. Semantic Kernel: C# 주력. OpenHands: TypeScript 주력 |
+| 범용성 | 범용(도구+메모리+에이전트) | RAG 특화(LlamaIndex, Haystack) / 멀티에이전트 특화(CrewAI, AutoGen) / 코딩 전용(OpenHands) |
+| MCP 공식 지원 | 공식 어댑터 `langchain-mcp-adapters` + `langchain[mcp]` extra (PyPI 확인) | — |
+| GitHub 스타 수(2026-09 실측) | **146,273** | OpenHands 87,828 · AutoGen 60,975 · CrewAI 58,500 · LlamaIndex 52,153 · Semantic Kernel 28,556 · Haystack 26,506 |
 
 **근거**: 범용성·MCP 공식 지원·대표성(스타 수) 3개 기준에서 LangChain이 명확히 우위다.
 
-**MCP 채택 비율** (topic 전체 대비 +mcp 겹침 비율): LangChain 5.0%(25,344개 중 1,275개), CrewAI 13.3%, AutoGen 14.4%, OpenHands 20.7%, Semantic Kernel 7.2%, LlamaIndex 5.6%, Haystack 2.7%. 비율은 소규모 프레임워크가 더 높지만, 절대 저장소 수(LangChain 1,275개 vs 2위 CrewAI 321개)와 범용성 기준에서 LangChain을 유지한다. 이 수치는 "LangChain이 MCP 친화적"이 아니라 "표본 확보 가능(목표 5종+ 충족)"의 근거로만 쓴다.
+**MCP 채택 비율**은 topic 기준 LangChain 5.0%로 CrewAI(13.3%)·AutoGen(14.4%)보다 낮지만, 절대 저장소 수는 LangChain(1,275개)이 2위(CrewAI 321개)의 4배다. 표본 확보(목표 5종+)에는 절대량 기준이 맞다.
 
-**반례 확인 (OpenClaw)**: 에이전트+외부 확장 요소로 인한 공급망 위험이라는 위협 모델 자체는 OpenClaw(개인용 AI 어시스턴트, ClawHub 스킬 레지스트리) 같은 다른 생태계에도 동일하게 존재한다. 다만 TypeScript(npm) 기반이고 확장 단위가 pip 의존성이 아니라 자체 스킬 레지스트리라 탐지 로직을 새로 짜야 해서, 이번 스코프에서는 제외하고 확장 과제로 남긴다.
+**최종 결정**: 분석 대상을 **PyPI 패키지 생태계 + LangChain(+MCP) 기반 AI 에이전트**로 확정. 그 외는 확장 과제로 남긴다.
 
-**최종 결정**: 분석 대상을 **PyPI 패키지 생태계 + LangChain(+MCP) 기반 AI 에이전트**로 확정. 그 외 레지스트리·프레임워크는 이번 학기 스코프에서 제외하고 확장 과제로 남긴다.
-
-**대상의 정의(오해 방지)**: "AI로 만들어진 저장소"(AI 코딩 도구로 작성된 코드)가 아니라 "AI 에이전트를 구현한 저장소"(코드 자체가 LangChain을 import하고 실행하는 저장소)를 의미한다. 저장소가 사람이 짰는지 AI 도구로 짰는지는 분석 대상 여부와 무관하다.
+**대상의 정의**: 분석 대상은 "AI로 만든 저장소"가 아니라 "LangChain을 import해 AI 에이전트를 구현한 저장소"다.
 
 ## 근거 문서
 
 `docs/design/00-overall.md` §2, `docs/contracts/sample_dataset.md`(LangChain 기반 example-agent 시나리오)
 
-[^1]: "Mini Shai-Hulud" 공급망 공격, 2026년 5월. [The Hacker News](https://thehackernews.com/2026/05/mini-shai-hulud-compromises.html), [OX Security](https://www.ox.security/blog/shai-hulud-here-we-go-again-170-packages-hit-across-npm-pypi/), [Orca Security](https://orca.security/resources/blog/tanstack-npm-supply-chain-worm/)
+[^1]: "Mini Shai-Hulud" 공급망 공격, 2026년 5월. [The Hacker News](https://thehackernews.com/2026/05/mini-shai-hulud-compromises.html)
