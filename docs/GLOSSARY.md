@@ -66,7 +66,7 @@
 |---|---|
 | **Conventional Commits** | `<type>(<module>): <설명>` 형식의 커밋 메시지 규칙. `docs/contracts/pr_schema.md` 참고 |
 | **CODEOWNERS** | 특정 경로 변경 시 자동으로 리뷰어를 지정하는 GitHub 기능. 현재 `.github/CODEOWNERS`는 역할명 placeholder 상태 |
-| **Epic / 하위 이슈** | Epic은 모듈 단위 큰 목표(`docs/epics/`), 하위 이슈는 그 안의 실행 단위 작업. 스키마는 `docs/contracts/epic_schema.md`, `docs/contracts/subissue_schema.md` |
+| **Epic / 하위 이슈** | Epic은 모듈 단위 큰 목표(`docs/epics/`), 하위 이슈는 그 안의 실행 단위 작업. 스키마는 `docs/contracts/epic_schema.md`, `docs/contracts/subissue_schema.md`(역할), `docs/contracts/pm_subissue_schema.md`(PM 직속) |
 
 ## 초보자용 배경 설명이 필요하면
 

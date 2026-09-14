@@ -14,7 +14,8 @@
 |---|---|---|
 | [`README.md`](../README.md) | 프로젝트 목적, 현재 상태, 전체 흐름을 소개 | 기준 문서 |
 | [`CONTRIBUTING.md`](../CONTRIBUTING.md) | 브랜치·이슈·PR·머지 규칙 | 기준 문서 |
-| [`.github/ISSUE_TEMPLATE/subissue.yml`](../.github/ISSUE_TEMPLATE/subissue.yml) | 하위 이슈 생성 양식 | 보조 파일 |
+| [`.github/ISSUE_TEMPLATE/subissue.yml`](../.github/ISSUE_TEMPLATE/subissue.yml) | 하위 이슈 생성 양식 (역할 R1~R4) | 보조 파일 |
+| [`.github/ISSUE_TEMPLATE/pm-subissue.yml`](../.github/ISSUE_TEMPLATE/pm-subissue.yml) | 하위 이슈 생성 양식 (PM/전체, Epic 직속) | 보조 파일 |
 | [`.github/PULL_REQUEST_TEMPLATE.md`](../.github/PULL_REQUEST_TEMPLATE.md) | PR 기본 양식 | 보조 파일 |
 | [`.github/CODEOWNERS`](../.github/CODEOWNERS) | 스키마 변경 시 자동 리뷰어 지정 | 보조 파일 |
 
@@ -39,7 +40,8 @@
 |---|---|---|
 | [`docs/contracts/epic_schema.md`](contracts/epic_schema.md) | 전체 Epic 공통 형식 | 기준 문서 |
 | [`docs/contracts/role_issue_schema.md`](contracts/role_issue_schema.md) | R1~R4 역할 상위 이슈 공통 형식 | 기준 문서 |
-| [`docs/contracts/subissue_schema.md`](contracts/subissue_schema.md) | 하위 이슈 공통 형식 | 기준 문서 |
+| [`docs/contracts/subissue_schema.md`](contracts/subissue_schema.md) | 하위 이슈 공통 형식 (역할 R1~R4 소속) | 기준 문서 |
+| [`docs/contracts/pm_subissue_schema.md`](contracts/pm_subissue_schema.md) | 하위 이슈 공통 형식 (PM/전체, Epic 직속) | 기준 문서 |
 | [`docs/contracts/pr_schema.md`](contracts/pr_schema.md) | PR 공통 형식·머지 조건 | 기준 문서 |
 | [`docs/contracts/decision_record_schema.md`](contracts/decision_record_schema.md) | Epic·역할별 결정 기록 공통 형식 | 기준 문서 |
 | [`docs/contracts/sample_dataset.md`](contracts/sample_dataset.md) | 전 모듈 공통 예시 시나리오 (스키마 검증 통과 확인됨) | 기준 문서 |

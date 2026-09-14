@@ -1,4 +1,4 @@
-name: 하위 이슈 (Sub-issue)
+name: 하위 이슈 (Sub-issue) — 역할(R1~R4)
 description: 역할 상위 이슈(R1~R4)를 실행 단위로 쪼갠 작업. 담당자가 직접 작성합니다.
 title: "[모듈] "
 body:
@@ -11,7 +11,6 @@ body:
         - Risk Analyzer (R2)
         - ML 이상탐지 (R3)
         - Attack Path Engine + Dashboard (R4)
-        - PM/전체
     validations:
       required: true
   - type: input

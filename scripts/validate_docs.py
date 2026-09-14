@@ -44,7 +44,7 @@ def check_sample_dataset_against_schemas() -> None:
 
 def check_internal_links() -> None:
     md_files = list(ROOT.glob("**/*.md"))
-    md_files = [f for f in md_files if ".git" not in f.parts]
+    md_files = [f for f in md_files if ".git" not in f.parts and ".claude" not in f.parts]
     link_re = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
     for f in md_files:
         content = f.read_text(errors="ignore")
