@@ -22,8 +22,11 @@ aasm/
 ## 2. 브랜치 전략
 
 - `main` — 항상 동작하는 상태만 유지. **직접 push 금지**, PR로만 병합
-- `<모듈>/<이슈번호>-<짧은설명>` — 작업 브랜치
-  - 예: `collector/12-pypi-metadata-fetch`, `risk-analyzer/18-cvss-scoring`, `ml-detector/23-feature-extraction`, `attack-path/30-graph-builder`, `dashboard/35-cytoscape-view`
+- `<타입>/<모듈>-<번호>-<짧은설명>` — 작업 브랜치
+  - 타입: `feat`/`fix`/`docs`/`refactor`/`test`/`chore` (§5 커밋 타입과 동일)
+  - 모듈: `r1`/`r2`/`r3`/`r4`(역할) 또는 `pm`(Epic 직속)
+  - 번호: 관련 이슈 번호. 이슈 없이 하는 작업(문서 정리 등)은 순번(01, 02...)
+  - 예: `docs/r1-01-dependency-collector`, `feat/r2-18-cvss-scoring`, `feat/r3-23-feature-extraction`, `feat/r4-30-graph-builder`, `feat/pm-40-codeowners-sync`
 
 별도 `develop` 브랜치는 두지 않습니다. 4인 규모에서 브랜치가 늘어날수록 관리 비용만 커집니다 — `main`을 기준으로 각자 브랜치 따서 PR로 합치는 단순 구조(트렁크 기반)로 갑니다.
 
@@ -58,11 +61,12 @@ aasm/
 <type>(<모듈>): <내용> (#이슈번호)
 
 예)
-feat(collector): PyPI JSON API 메타데이터 조회 추가 (#12)
-fix(risk-analyzer): CVSS 점수 정규화 버그 수정 (#19)
+feat(r1): PyPI JSON API 메타데이터 조회 추가 (#12)
+fix(r2): CVSS 점수 정규화 버그 수정 (#19)
 docs(schemas): attack_graph 스키마에 필드 설명 추가 (#31)
 ```
 `type`: `feat` `fix` `docs` `refactor` `test` `chore`
+`모듈`: `r1`/`r2`/`r3`/`r4`(역할) · `pm`(Epic 직속) · `schemas`(여러 역할에 걸친 스키마 변경, CODEOWNERS 전원 승인 대상)
 
 ## 6. Pull Request 정책
 
