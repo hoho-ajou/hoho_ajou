@@ -4,7 +4,7 @@
 
 ## 1. 시각화 라이브러리: Cytoscape.js 확정
 
-`resources/curated_list.md` J절의 2026 비교 가이드(Cytoscape.js vs vis-network vs Sigma.js)와 WebSearch로 확인한 실제 보안 그래프 UI 사례(공격경로 시각화 툴들이 risk score로 정렬하고 클릭 시 경로를 하이라이트하는 패턴)를 근거로, 사전 검토된 **Cytoscape.js를 그대로 확정**합니다.
+2026 비교 검토(Cytoscape.js vs vis-network vs Sigma.js)와 실제 보안 그래프 UI 사례(공격경로 시각화 툴들이 risk score로 정렬하고 클릭 시 경로를 하이라이트하는 패턴)를 근거로, 사전 검토된 **Cytoscape.js를 그대로 확정**합니다.
 
 - 우리 그래프는 `의존성 → 에이전트 → 권한 → 공격경로`의 4단계 이종(heterogeneous) 노드 타입 + 계층적 흐름을 가지며, 노드 수는 학부 프로젝트 규모(수십~수백 개)로 대규모가 아닙니다. 이 규모에서는 Sigma.js(WebGL, 수만 개 노드 최적화)의 장점이 필요 없고, vis-network는 그래프 알고리즘·레이아웃 확장(`cytoscape-dagre`, `cytoscape-cola` 등)이 Cytoscape.js보다 빈약합니다.
 - Cytoscape.js는 원래 생물정보학 네트워크 분석용으로 설계되어 "노드/엣지에 속성을 붙이고 그 속성으로 스타일·필터·경로탐색을 하는" 용도에 강하며, 보안 공격경로 시각화 연구·툴에서도 실제로 채택 사례가 있습니다. `dagre` 레이아웃이 우리의 단계적 흐름(의존성→...→경로)을 자연스러운 좌→우 계층 구조로 그려준다는 점이 결정적입니다.

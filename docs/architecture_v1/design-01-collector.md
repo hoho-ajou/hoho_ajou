@@ -1,6 +1,6 @@
 # 기술 설계 문서 — Dependency Collector (`collector/`)
 
-> 관련 자료: `study_week1/README.md` §5, `architecture.html` #collector, `CONTRIBUTING.md` §3(스키마 계약)
+> 관련 자료: `CONTRIBUTING.md` §3(스키마 계약)
 
 ## 1. 모듈 구조 (제안)
 
