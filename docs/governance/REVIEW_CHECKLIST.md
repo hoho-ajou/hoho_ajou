@@ -18,5 +18,5 @@
 
 ## 리뷰 결과 반영
 
-- 승인된 중요 결정은 [`docs/review/decisions/`](../review/decisions.md)에 결정 기록으로 남깁니다.
+- 승인된 중요 결정은 [`docs/review/decisions.md`](../review/decisions.md)에 결정 기록으로 남깁니다.
 - 진행 상태는 [`docs/review/ISSUE_TRACKER.md`](../review/ISSUE_TRACKER.md)에 반영합니다.

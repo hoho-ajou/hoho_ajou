@@ -1,6 +1,6 @@
 # CONTRIBUTING — AASM 협업 가이드
 
-4개 모듈이 순서대로 데이터를 주고받는 구조(Collector → Risk Analyzer/ML → Attack Path Engine → Dashboard)이기 때문에, **"누가 무엇을 넘겨주는가"의 계약(인터페이스)** 을 지키는 게 이 정책의 핵심입니다.
+5개 모듈(Collector → Risk Analyzer/ML → Attack Path Engine → Dashboard, 4명이 R1~R4로 나눠 맡음)이 순서대로 데이터를 주고받는 구조이기 때문에, **"누가 무엇을 넘겨주는가"의 계약(인터페이스)** 을 지키는 게 이 정책의 핵심입니다.
 
 ---
 
@@ -12,6 +12,7 @@
 aasm/
 ├── schemas/             # ⭐ 모듈 간 데이터 계약(JSON Schema) — 아래 3번 참고
 ├── docs/                # 설계 문서·거버넌스·검토 기록 — 지금 여기가 본체
+├── scripts/             # 문서 일관성 검증 (validate_docs.py)
 └── .github/
     ├── ISSUE_TEMPLATE/
     └── PULL_REQUEST_TEMPLATE.md
@@ -22,11 +23,13 @@ aasm/
 ## 2. 브랜치 전략
 
 - `main` — 항상 동작하는 상태만 유지. **직접 push 금지**, PR로만 병합
-- `<타입>/<모듈>-<번호>-<짧은설명>` — 작업 브랜치
+- `<타입>/<모듈>-<번호>-<짧은설명>` — 역할(R1~R4) 작업 브랜치
   - 타입: `feat`/`fix`/`docs`/`refactor`/`test`/`chore` (§5 커밋 타입과 동일)
-  - 모듈: `r1`/`r2`/`r3`/`r4`(역할) 또는 `pm`(Epic 직속)
-  - 번호: 관련 이슈 번호. 이슈 없이 하는 작업(문서 정리 등)은 순번(01, 02...)
-  - 예: `docs/r1-01-dependency-collector`, `feat/r2-18-cvss-scoring`, `feat/r3-23-feature-extraction`, `feat/r4-30-graph-builder`, `feat/pm-40-codeowners-sync`
+  - 모듈: `r1`/`r2`/`r3`/`r4`
+  - 번호: 관련 이슈 번호
+  - 예: `feat/r1-12-pypi-metadata-fetch`, `feat/r2-18-cvss-scoring`, `feat/r3-23-feature-extraction`, `feat/r4-30-graph-builder`
+- `<타입>/<짧은설명>` — Epic 직속(PM) 작업이나 이슈 번호 없이 하는 작업(문서 정리 등)
+  - 예: `docs/pr-template-sync`, `chore/codeowners-sync`
 
 별도 `develop` 브랜치는 두지 않습니다. 4인 규모에서 브랜치가 늘어날수록 관리 비용만 커집니다 — `main`을 기준으로 각자 브랜치 따서 PR로 합치는 단순 구조(트렁크 기반)로 갑니다.
 
@@ -51,9 +54,8 @@ aasm/
 - 역할(R1~R4) 상위 이슈: GitHub Issue로 직접 존재(Epic #1을 승계, `Part of #1`), 역할별 목표·범위·완료조건을 담음. 요약표는 [`docs/governance/OWNERSHIP.md`](docs/governance/OWNERSHIP.md).
 - 하위 이슈: 담당자가 자기 역할 상위 이슈 아래 직접 생성. GitHub 템플릿은 [`.github/ISSUE_TEMPLATE/subissue.md`](.github/ISSUE_TEMPLATE/subissue.md).
 - PM/전체 하위 이슈(특정 역할에 속하지 않는 총괄의 전체 조율 작업): Epic(#1) 직속으로 생성. GitHub 템플릿은 [`.github/ISSUE_TEMPLATE/pm-subissue.md`](.github/ISSUE_TEMPLATE/pm-subissue.md).
-- 진행 현황: [`docs/review/ISSUE_TRACKER.md`](docs/review/ISSUE_TRACKER.md)
 
-라벨은 쓰지 않습니다 — 4인 규모에서는 이슈 제목의 `[모듈]` 접두사와 담당자 지정만으로 충분합니다. 진행 상태는 [`docs/review/ISSUE_TRACKER.md`](docs/review/ISSUE_TRACKER.md)로 관리합니다.
+라벨은 쓰지 않습니다 — 4인 규모에서는 이슈 제목의 `[모듈]` 접두사와 담당자 지정만으로 충분합니다. 진행 현황은 [`docs/review/ISSUE_TRACKER.md`](docs/review/ISSUE_TRACKER.md)로 관리합니다.
 
 ## 5. 커밋 메시지 (Conventional Commits)
 
@@ -73,7 +75,7 @@ docs(schemas): attack_graph 스키마에 필드 설명 추가 (#31)
 PR 템플릿은 [`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md). 머지 조건 핵심만 요약하면:
 
 - **리뷰어 1명 이상 승인 필수** — 자기 코드 자기가 머지 금지
-- **누가 리뷰하는가**: 그 모듈의 출력을 받아쓰는 다음 담당자가 우선 리뷰 (예: Collector PR → Risk Analyzer·ML 담당자)
+- **누가 리뷰하는가**: 그 모듈의 출력을 받아쓰는 다음 담당자가 우선 리뷰 (예: R1 PR → R2·R3 담당자)
 - `schemas/` 변경 PR은 CODEOWNERS 전원 승인 필수
 - 병합 방식은 **Squash and merge**
 - main 브랜치 보호: 직접 push 차단, PR 승인 없이 병합 차단

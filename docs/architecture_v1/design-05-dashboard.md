@@ -11,7 +11,7 @@
 
 ## 2. 웹 스택: FastAPI(얇은 백엔드) + 정적 JS 프론트엔드
 
-`docs/design/00-overall.md`는 "Dashboard만 JS(Node 20+)"로 잠정 제안했으나, 이를 다음과 같이 보완 제안합니다.
+`docs/architecture_v1/design-00-overall.md`는 "Dashboard만 JS(Node 20+)"로 잠정 제안했으나, 이를 다음과 같이 보완 제안합니다.
 
 **결론: 아주 얇은 FastAPI 백엔드(Python) + 빌드 도구 없는 순수 JS(Cytoscape.js) 프론트엔드.**
 
