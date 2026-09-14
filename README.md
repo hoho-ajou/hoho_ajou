@@ -50,13 +50,13 @@ NOT_IMPLEMENTED
 
 ```text
 #1 전체 Epic (총괄 소유)
-└─ R1~R4 각자의 상위 이슈 (docs/roles/*.md, Epic #1 승계)
+└─ R1~R4 각자의 상위 이슈 (#9~12, Epic #1 승계)
     └─ 각자 직접 만드는 하위 이슈
 ```
 
-R1~R4 상위 이슈의 목표·범위·완료조건은 [`docs/roles/`](docs/roles/)에 있고, 요약은 [`docs/governance/OWNERSHIP.md`](docs/governance/OWNERSHIP.md)에서 봅니다. 각자 자기 상위 이슈 아래 하위 이슈를 직접 만들어 진행합니다 ([`.github/ISSUE_TEMPLATE/subissue.md`](.github/ISSUE_TEMPLATE/subissue.md) 사용). 리뷰·머지 절차는 [CONTRIBUTING.md](CONTRIBUTING.md)를 따릅니다.
+R1~R4 상위 이슈(GitHub Issue 자체가 원본)의 목표·범위·완료조건 요약은 [`docs/governance/OWNERSHIP.md`](docs/governance/OWNERSHIP.md)에서 봅니다. 각자 자기 상위 이슈 아래 하위 이슈를 직접 만들어 진행합니다 ([`.github/ISSUE_TEMPLATE/subissue.md`](.github/ISSUE_TEMPLATE/subissue.md) 사용). 리뷰·머지 절차는 [CONTRIBUTING.md](CONTRIBUTING.md)를 따릅니다.
 
-진행 현황은 [실제 Issue 현황](docs/review/ISSUE_TRACKER.md), 확정된 설계 결정은 [결정 기록](docs/review/decisions/README.md)에서 확인합니다.
+진행 현황은 [실제 Issue 현황](docs/review/ISSUE_TRACKER.md), 확정된 설계 결정은 [결정 기록](docs/review/decisions.md)에서 확인합니다.
 
 ## 담당 영역
 

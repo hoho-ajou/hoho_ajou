@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate AASM docs consistency: schema examples + internal markdown links + epic sections.
+"""Validate AASM docs consistency: schema examples + internal markdown links.
 
 Run: python3 scripts/validate_docs.py
 """
@@ -59,20 +59,9 @@ def check_internal_links() -> None:
                 errors.append(f"{f.relative_to(ROOT)}: broken link -> {link}")
 
 
-def check_epic_sections() -> None:
-    required = ["## 목표", "## 범위", "## 완료조건", "## 참고 자료", "## 담당 문서", "## 하위 이슈"]
-    for d in ["docs/epics", "docs/roles"]:
-        for f in sorted((ROOT / d).glob("*.md")):
-            content = f.read_text()
-            for section in required:
-                if section not in content:
-                    errors.append(f"{f.relative_to(ROOT)}: missing section '{section}'")
-
-
 def main() -> int:
     check_sample_dataset_against_schemas()
     check_internal_links()
-    check_epic_sections()
     if errors:
         print(f"{len(errors)} problem(s) found:\n")
         for e in errors:
