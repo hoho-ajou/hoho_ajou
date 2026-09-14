@@ -7,7 +7,7 @@ Closes # 또는 Refs #
 (왜 이 변경이 필요한지 — 어떤 문제를 해결하는지, 안 하면 뭐가 안 되는지)
 
 ## 변경 파일
-(변경한 파일/문서를 경로로 나열 — 한눈에 보이게. 예: `schemas/collector_output.schema.json`, `docs/design/01-collector.md`)
+(변경한 파일/문서를 경로로 나열 — 한눈에 보이게. 예: `schemas/collector_output.schema.json`, `docs/architecture_v1/design-01-collector.md`)
 
 ## 체크리스트
 (이 pr을 merge하기 위해서 수행되어야 하는 내용)

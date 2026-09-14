@@ -37,50 +37,11 @@
 
 ## 5. Attack Path Engine에 요청하는 INPUT 스키마 (`schemas/attack_graph.schema.json`)
 
-Dashboard는 아래 필드가 **반드시** 채워진 상태로 넘어와야 자체 재계산 없이 바로 렌더링할 수 있습니다.
-
-```jsonc
-{
-  "schema_version": "1.0",
-  "run_id": "string",
-  "generated_at": "ISO8601 string",
-  "source_module": "attack-path",
-  "nodes": [
-    {
-      "id": "string (unique)",
-      "type": "dependency | agent | permission | path_step",
-      "label": "string (사람이 읽을 표시명, 필수)",
-      "risk_score": "number 0-100 (Dashboard는 재계산하지 않음)",
-      "attributes": {
-        "package_version": "string, optional",
-        "cve_ids": ["string", "..."],
-        "typosquat_flag": "boolean, optional",
-        "ml_anomaly_score": "number, optional",
-        "permission_name": "string, optional",
-        "agent_name": "string, optional"
-      }
-    }
-  ],
-  "edges": [
-    { "id": "string", "source": "node id", "target": "node id",
-      "type": "depends_on | grants_permission | enables_path",
-      "risk_contribution": "number 0-100, optional" }
-  ],
-  "paths": [
-    {
-      "path_id": "string",
-      "node_sequence": ["node id", "..."],
-      "edge_sequence": ["edge id", "..."],
-      "overall_risk_score": "number 0-100 (필수, 리스트 정렬 기준)",
-      "description": "string (사람이 읽을 한 줄 요약, 필수)"
-    }
-  ]
-}
-```
+Dashboard는 아래 필드가 **반드시** 채워진 상태로 넘어와야 자체 재계산 없이 바로 렌더링할 수 있습니다 — 실제 필드 구조와 값 예시는 [`data_contracts.md`](data_contracts.md)와 [`sample_dataset.md`](sample_dataset.md) 참고.
 
 ## 6-1. 확정 사항 (교차검토 반영)
 
-> ⚠️ **시뮬레이션 초안**: 아래는 실제 팀 교차검토가 아니라 여러 모듈 관점을 미리 가정해서 만든 초안입니다. 실제 담당자와 교차검토 후 다르게 결론 나면 그 내용으로 갱신하세요 (근거는 `docs/review/decisions/0X-*.md`에).
+> ⚠️ **시뮬레이션 초안**: 아래는 실제 팀 교차검토가 아니라 여러 모듈 관점을 미리 가정해서 만든 초안입니다. 실제 담당자와 교차검토 후 다르게 결론 나면 그 내용으로 갱신하세요 (근거는 `docs/review/decisions/`에).
 
 **질문 15 답변 (Attack Path Engine → Dashboard):** Attack Path Engine은 **범용 `nodes/edges/paths` JSON**(위 5절 스키마 그대로)만 출력하고, Cytoscape 전용 `elements` 포맷으로의 변환은 **Dashboard 프론트엔드가 렌더링 시점에** 수행합니다.
 

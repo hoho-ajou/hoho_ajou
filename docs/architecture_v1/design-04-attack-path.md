@@ -61,44 +61,11 @@ attack-path/
 
 ## 6. 출력 스키마 초안 (`schemas/attack_graph.schema.json`, Dashboard 소비용)
 
-```json
-{
-  "schema_version": "1.0",
-  "run_id": "run-2026-09-06-01",
-  "generated_at": "2026-09-06T00:00:00Z",
-  "source_module": "attack-path",
-  "nodes": [
-    {
-      "id": "pkg:pypi/flask@2.0.1", "type": "dependency", "label": "flask 2.0.1",
-      "risk_score": 72,
-      "attributes": {"package_version": "2.0.1", "cve_ids": ["CVE-XXXX"], "typosquat_flag": false}
-    },
-    {
-      "id": "perm:api_key_access", "type": "permission", "label": "API Key Access",
-      "risk_score": 80,
-      "attributes": {"permission_name": "api_key_access", "target_asset": "asset:secret_store"}
-    }
-  ],
-  "edges": [
-    {"id": "e1", "source": "agent:orchestrator-1", "target": "pkg:pypi/flask@2.0.1", "type": "depends_on", "risk_contribution": 14}
-  ],
-  "paths": [
-    {
-      "path_id": "path-001",
-      "node_sequence": ["pkg:pypi/flask@2.0.1", "agent:orchestrator-1", "perm:api_key_access", "asset:secret_store"],
-      "edge_sequence": ["e1", "e2", "e3"],
-      "overall_risk_score": 89,
-      "description": "외부 노출된 flask 취약점(CVE-XXXX)을 통해 orchestrator-1 에이전트를 장악하면, 보유한 api_key_access 권한으로 secret_store까지 접근 가능"
-    }
-  ]
-}
-```
-
-(초안이므로 Dashboard 담당 리뷰 후 필드명·타입 확정 필요)
+실제 필드 구조와 값 예시는 [`data_contracts.md`](data_contracts.md)와 [`sample_dataset.md`](sample_dataset.md) 참고. (초안이므로 Dashboard 담당 리뷰 후 필드명·타입 확정 필요)
 
 ## 확정 사항 (교차검토 반영)
 
-> ⚠️ **시뮬레이션 초안**: 아래는 실제 팀 교차검토가 아니라 여러 모듈 관점을 미리 가정해서 만든 초안입니다. 실제 담당자와 교차검토 후 다르게 결론 나면 그 내용으로 갱신하세요 (근거는 `docs/review/decisions/0X-*.md`에).
+> ⚠️ **시뮬레이션 초안**: 아래는 실제 팀 교차검토가 아니라 여러 모듈 관점을 미리 가정해서 만든 초안입니다. 실제 담당자와 교차검토 후 다르게 결론 나면 그 내용으로 갱신하세요 (근거는 `docs/review/decisions/`에).
 
 **1. Permission 데이터 출처 (팀 전체 결정, 최중요):** 제시된 (a)/(b)/(c) 중 하나가 아니라 **(a)+(c) 혼합**을 채택합니다. Collector가 에이전트 코드를 정적 스캔하는 유일한 모듈이므로 실제 "이 에이전트가 이 권한을 행사한다"는 사실(`agent.permissions[]`: 권한 타입 + 대상 자산 문자열)은 Collector가 코드 스캔으로 채워 넣고, 그 필드의 **enum·구조 자체는 Attack Path Engine이 정의**합니다(그래프 노드/엣지로 직접 소비하는 쪽이 스키마를 소유해야 이후 그래프 빌더 변경 시 마찰이 없기 때문). Risk Analyzer·ML은 이 필드를 만들지 않고 참조만 합니다. Collector 담당자에게 `agent.permissions[]` 필드 추가를 요청 예정.
 

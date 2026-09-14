@@ -101,60 +101,11 @@ risk-analyzer/
 
 ## 5. 출력 스키마 초안 (`schemas/risk_score.schema.json`)
 
-```json
-{
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "RiskScoreOutput",
-  "type": "object",
-  "required": ["generated_at", "packages"],
-  "properties": {
-    "generated_at": { "type": "string", "format": "date-time" },
-    "packages": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": ["name", "version", "ecosystem", "package_risk", "permission_weight", "permission_source", "risk_score", "risk_level", "signals"],
-        "properties": {
-          "name": { "type": "string" },
-          "version": { "type": "string" },
-          "ecosystem": { "type": "string" },
-          "package_risk": { "type": "number", "minimum": 0, "maximum": 1 },
-          "permission_weight": { "type": "number", "minimum": 1.0, "maximum": 3.0 },
-          "permission_source": {
-            "type": "string",
-            "description": "권한 등급 산정에 쓰인 권한 데이터의 출처. Risk Analyzer는 권한 목록을 직접 생성하지 않고 Attack Path Engine 소유 스키마를 참조한다(Q6 결정).",
-            "enum": ["attack_path_engine", "default_medium_fallback"]
-          },
-          "risk_score": { "type": "number", "minimum": 0, "description": "숫자형 원점수(0~3.0). Dashboard 등 정렬/시각화용." },
-          "risk_level": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH"], "description": "risk_score를 사람이 읽기 쉬운 등급으로 변환. Attack Path Engine 그래프 노드 라벨/색상용." },
-          "signals": {
-            "type": "object",
-            "properties": {
-              "cvss_norm": { "type": "number" },
-              "cve_ids": {
-                "type": "array",
-                "items": { "type": "string" },
-                "description": "cvss_norm 계산에 쓰인 원본 CVE ID 목록 (Q8 결정: 정규화값 + 원본 목록 둘 다 포함, Dashboard의 attributes.cve 표시 요구사항(질문 13) 지원)"
-              },
-              "epss_score": { "type": "number" },
-              "typo_flag": { "type": "number", "enum": [0, 0.5, 1] },
-              "typo_nearest_match": { "type": ["string", "null"] },
-              "staleness_score": { "type": "number" },
-              "months_since_last_release": { "type": "number" }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-```
-
-이 스키마는 Attack Path Engine 담당의 리뷰가 필요하다(CONTRIBUTING.md의 CODEOWNERS 규칙: `@R2 @R4`). 특히 `signals` 세부 필드가 그래프 노드 속성으로 그대로 쓰기 충분한지 확인 요청.
+실제 필드 구조와 값 예시는 [`data_contracts.md`](data_contracts.md)와 [`sample_dataset.md`](sample_dataset.md) 참고. 스키마 확정에는 Attack Path Engine 담당의 리뷰가 필요하다(CODEOWNERS). 특히 `signals` 세부 필드가 그래프 노드 속성으로 그대로 쓰기 충분한지 확인 요청.
 
 ## 확정 사항 (교차검토 반영)
 
-> ⚠️ **시뮬레이션 초안**: 아래는 실제 팀 교차검토가 아니라 여러 모듈 관점을 미리 가정해서 만든 초안입니다. 실제 담당자와 교차검토 후 다르게 결론 나면 그 내용으로 갱신하세요 (근거는 `docs/review/decisions/0X-*.md`에).
+> ⚠️ **시뮬레이션 초안**: 아래는 실제 팀 교차검토가 아니라 여러 모듈 관점을 미리 가정해서 만든 초안입니다. 실제 담당자와 교차검토 후 다르게 결론 나면 그 내용으로 갱신하세요 (근거는 `docs/review/decisions/`에).
 
 **Q6. 권한(Permission) 데이터 출처 → (c) Attack Path Engine이 정의·소유, Risk Analyzer는 참조(consume)만.**
 Risk Analyzer의 `permission_weight`는 이미 권한 등급(LOW/MEDIUM/HIGH)을 **입력**으로 쓰는 소비자이지, 권한 목록(타입+대상 자산)의 원 출처가 아니다. 반대로 Attack Path Engine은 그래프 엣지(에이전트→자산 접근)를 만들기 위해 권한 데이터를 어차피 구조화해야 하므로, 스키마 소유권을 그쪽에 두고 Risk Analyzer·Collector는 그 스키마를 참조해 자기 필드에 매핑하는 것이 이중 정의를 막는다. 위 §2.4에 `permission_source` 필드를 추가해 출처를 명시했다.
