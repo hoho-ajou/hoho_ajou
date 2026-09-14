@@ -64,33 +64,11 @@ ml-detector/
 
 ## 7. 출력 JSON 스키마 (DRAFT — `schemas/ml_result.schema.json`)
 
-```json
-{
-  "schema_version": "0.1.0-draft",
-  "generated_at": "2026-09-06T00:00:00Z",
-  "results": [
-    {
-      "package_name": "example-pkg",
-      "package_version": "1.2.3",
-      "ecosystem": "pypi",
-      "is_flagged": true,
-      "confidence_score": 0.87,
-      "model": "random_forest_v1",
-      "triggered_features": [
-        { "feature": "install_script_present", "value": true, "importance": 0.31 },
-        { "feature": "code_entropy_max", "value": 7.6, "importance": 0.22 },
-        { "feature": "maintainer_account_age_days", "value": 4, "importance": 0.18 }
-      ]
-    }
-  ]
-}
-```
-
-이 스키마는 DRAFT이며 Attack Path Engine 담당자의 검토·승인 후 `schemas/ml_result.schema.json`으로 확정한다(`CONTRIBUTING.md` 4번 CODEOWNERS 규칙에 따름).
+실제 필드 구조와 값 예시는 [`data_contracts.md`](data_contracts.md)와 [`sample_dataset.md`](sample_dataset.md) 참고. 확정에는 Attack Path Engine 담당자의 검토·승인이 필요하다(`CONTRIBUTING.md` CODEOWNERS 규칙).
 
 ## 확정 사항 (교차검토 반영)
 
-> ⚠️ **시뮬레이션 초안**: 아래는 실제 팀 교차검토가 아니라 여러 모듈 관점을 미리 가정해서 만든 초안입니다. 실제 담당자와 교차검토 후 다르게 결론 나면 그 내용으로 갱신하세요 (근거는 `docs/review/decisions/0X-*.md`에).
+> ⚠️ **시뮬레이션 초안**: 아래는 실제 팀 교차검토가 아니라 여러 모듈 관점을 미리 가정해서 만든 초안입니다. 실제 담당자와 교차검토 후 다르게 결론 나면 그 내용으로 갱신하세요 (근거는 `docs/review/decisions/`에).
 
 **Q10. `triggered_features` 구조 (Attack Path Engine 질문 10):**
 현재 `{ feature, value, importance }` 배열 형태를 그대로 그래프 노드 속성으로 사용 가능하다고 판단, 재구성 불필요. 다만 그래프 렌더링·Dashboard 표시 편의를 위해 다음을 확정한다: (1) 배열은 `importance` 내림차순 정렬 상태로 출력, (2) 노드 속성 과다 방지를 위해 상위 5개로 cap, (3) 필드명은 그대로 `feature`(string) / `value`(any) / `importance`(0~1 float) 유지. Attack Path Engine은 이 배열을 노드의 `attributes.ml_triggered_features`로 그대로 매핑하면 된다.

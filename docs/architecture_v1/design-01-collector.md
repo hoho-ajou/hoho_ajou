@@ -42,61 +42,11 @@ collector/
 
 ## 4. 출력 스키마 초안 (`schemas/collector_output.schema.json`)
 
-```json
-{
-  "schema_version": "0.1.0",
-  "scan_id": "uuid",
-  "repo": { "url": "https://github.com/org/agent-repo", "commit_sha": "abc123", "scanned_at": "2026-09-06T12:00:00Z" },
-  "status": "partial",
-  "dependencies": [
-    {
-      "name": "langchain",
-      "version": "0.3.5",
-      "ecosystem": "pypi",
-      "source": ["manifest", "import"],
-      "declared_in": ["requirements.txt"],
-      "resolution_status": "resolved",
-      "pypi": {
-        "latest_version": "0.3.7",
-        "summary": "Building applications with LLMs",
-        "license": "MIT",
-        "home_page": "https://langchain.com",
-        "last_release_at": "2026-08-01T00:00:00Z"
-      },
-      "hashes": [{ "algo": "sha256", "value": "..." }],
-      "distribution_files": [
-        { "filename": "langchain-0.3.5-py3-none-any.whl", "url": "https://files.pythonhosted.org/.../langchain-0.3.5-py3-none-any.whl", "hashes": [{ "algo": "sha256", "value": "..." }] }
-      ],
-      "vulnerabilities": [
-        { "id": "GHSA-xxxx", "aliases": ["CVE-2026-0001"], "severity": "HIGH", "cvss_base_score": 8.1, "cvss_source": "nvd", "fixed_versions": ["0.3.6"], "osv_url": "https://osv.dev/vulnerability/GHSA-xxxx" }
-      ],
-      "maintainers": {
-        "maintainer_count": 3,
-        "data_status": "ok",
-        "maintainer_accounts": [
-          { "username": "example", "account_created_at": null, "data_status": "not_collected" }
-        ]
-      },
-      "external_integrations": ["network", "shell"]
-    }
-  ],
-  "integrations": [
-    { "type": "mcp_remote", "name": "filesystem-server", "detected_in": "config/mcp.json", "transport": "http_sse" },
-    { "type": "langchain_builtin_tool", "name": "SerpAPIWrapper", "detected_in": "agent.py" }
-  ],
-  "sbom": { "format": "CycloneDX", "spec_version": "1.6", "generator": "cyclonedx-py", "file_ref": "sbom.json" },
-  "errors": [
-    { "stage": "pypi_client", "code": "PYPI_NOT_FOUND", "message": "package 'internal-tool' not found on PyPI", "package": "internal-tool" }
-  ],
-  "summary": { "total_dependencies": 42, "resolved": 40, "unresolved": 2, "vulnerable_count": 3, "integrations_count": 2 }
-}
-```
-
-이 문서는 DRAFT이며, `CONTRIBUTING.md` 규칙에 따라 `schemas/collector_output.schema.json`으로 확정하려면 Risk Analyzer·ML 담당자 승인이 필요합니다.
+실제 필드 구조와 값 예시는 [`data_contracts.md`](data_contracts.md)와 [`sample_dataset.md`](sample_dataset.md) 참고. 스키마 확정에는 `CONTRIBUTING.md` 규칙에 따라 Risk Analyzer·ML 담당자 승인이 필요합니다.
 
 ## 확정 사항 (교차검토 반영)
 
-> ⚠️ **시뮬레이션 초안**: 아래는 실제 팀 교차검토가 아니라 여러 모듈 관점을 미리 가정해서 만든 초안입니다. 실제 담당자와 교차검토 후 다르게 결론 나면 그 내용으로 갱신하세요 (근거는 `docs/review/decisions/0X-*.md`에).
+> ⚠️ **시뮬레이션 초안**: 아래는 실제 팀 교차검토가 아니라 여러 모듈 관점을 미리 가정해서 만든 초안입니다. 실제 담당자와 교차검토 후 다르게 결론 나면 그 내용으로 갱신하세요 (근거는 `docs/review/decisions/`에).
 
 1. **`cvss_base_score` 인라인 제공 (Risk Analyzer Q1)** — 예. OSV 응답의 `severity`(CVSS 벡터)를 파싱해 `cvss_base_score`(숫자) + `cvss_source`(`nvd`/`osv` 등)로 `vulnerabilities[]`에 직접 포함합니다. 파싱 불가 시 `cvss_base_score: null`.
 2. **`external_integrations[]` 필드 추가 (Risk Analyzer Q2)** — 예. 5단계 외부 연동 탐지 결과를 패키지 단위로도 태깅해 각 dependency에 `external_integrations: ["network"|"shell"|"mcp"|"filesystem"]` 배열을 추가합니다. (기존 top-level `integrations[]`는 유지, 이건 패키지-연동 매핑용.)

@@ -23,7 +23,7 @@ flowchart LR
 
 - Risk Analyzer와 ML은 Collector 출력을 **동시에(병렬)** 받아 각자 독립 실행
 - Attack Path Engine은 **Risk Analyzer + ML 둘 다 끝나야** 시작 (fan-in)
-- 각 화살표 라벨이 `schemas/*.json` 파일명 — 자세한 필드는 `docs/contracts/interface_map.md` 참고
+- 각 화살표 라벨이 `schemas/*.json` 파일명 — 자세한 필드는 `data_contracts.md` 참고
 
 ## 2. Collector 내부 처리 순서
 
@@ -44,7 +44,7 @@ flowchart TD
 
 ## 3. 공격 경로 예시 (샘플 데이터셋 기준)
 
-`docs/contracts/sample_dataset.md`의 시나리오를 그래프로 그리면:
+`sample_dataset.md`의 시나리오를 그래프로 그리면:
 
 ```mermaid
 flowchart LR

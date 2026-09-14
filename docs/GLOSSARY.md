@@ -1,6 +1,6 @@
 # 용어집 (구현자용 — schemas/design 전 모듈 공통)
 
-`study_week1/README.md` §3의 용어집이 "처음 배우는 사람" 대상이라면, 이 문서는 **schemas/*.json과 docs/design/*.md를 그대로 구현할 사람(또는 AI)** 대상입니다. 각 스키마 필드명이 어느 용어에서 왔는지 연결하는 데 씁니다.
+`study_week1/README.md` §3의 용어집이 "처음 배우는 사람" 대상이라면, `study_week1/README.md` §3의 용어집이 "처음 배우는 사람" 대상이라면, 이 문서는 **schemas/*.json과 docs/architecture_v1/design-*.md를 그대로 구현할 사람(또는 AI)** 대상입니다. 각 스키마 필드명이 어느 용어에서 왔는지 연결하는 데 씁니다.
 
 ## 전체 파이프라인 공통
 

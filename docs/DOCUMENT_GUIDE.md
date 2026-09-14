@@ -44,10 +44,8 @@
 | [`docs/contracts/pm_subissue_schema.md`](contracts/pm_subissue_schema.md) | 하위 이슈 공통 형식 (PM/전체, Epic 직속) | 기준 문서 |
 | [`docs/contracts/pr_schema.md`](contracts/pr_schema.md) | PR 공통 형식·머지 조건 | 기준 문서 |
 | [`docs/contracts/decision_record_schema.md`](contracts/decision_record_schema.md) | Epic·역할별 결정 기록 공통 형식 | 기준 문서 |
-| [`docs/contracts/sample_dataset.md`](contracts/sample_dataset.md) | 전 모듈 공통 예시 시나리오 (스키마 검증 통과 확인됨) | 기준 문서 |
-| [`docs/contracts/interface_map.md`](contracts/interface_map.md) | 필드가 모듈 사이로 흘러가는 전체 경로 | 쉬운 요약 |
-| [`schemas/README.md`](../schemas/README.md) | 스키마가 아직 DRAFT임을 명시, 담당 매핑 | 쉬운 요약 |
-| [`schemas/*.schema.json`](../schemas) | 모듈 간 데이터 계약 (JSON Schema, **현재 DRAFT** — 담당자가 실제 설계로 교체 가능) | 기준 문서 |
+
+데이터 계약 스키마(`data_contracts.md`, `sample_dataset.md`, `schemas/*.json`)는 아래 "Architecture" 섹션 참고.
 
 ## 검토 업무와 기록
 
@@ -57,18 +55,24 @@
 | [`docs/review/decisions/README.md`](review/decisions/README.md) | 확정된 설계 결정 목록 (Epic 1개 + 역할 4개) | 기준 문서 |
 | `docs/review/decisions/00-overall.md`, `r1~r4-*.md` | Epic·역할별 결정 기록 | 기준 기록 |
 
-## Architecture (기술 설계) 기준 문서
+## Architecture (기술 설계) 기준 문서 — `docs/architecture_v1/`
+
+기술 설계·데이터 계약의 SSOT입니다. 예전에는 `docs/design/`+`docs/contracts/`로 흩어져 있었는데, 하나로 합쳤습니다(LLM에게 구현을 맡길 때 이 폴더 하나만 넘기면 되도록).
 
 | 파일 | 쉽게 말하면 | 구분 |
 |---|---|---|
-| [`docs/design/README.md`](design/README.md) | 설계 문서 읽는 순서 안내 | 쉬운 요약 |
-| [`00-overall.md`](design/00-overall.md) | 전체 파이프라인 오케스트레이션, 공통 컨벤션 | 기준 문서 |
-| [`01-collector.md`](design/01-collector.md) | Dependency Collector 설계 | 기준 문서 |
-| [`02-risk-analyzer.md`](design/02-risk-analyzer.md) | Risk Analyzer 설계 | 기준 문서 |
-| [`03-ml-detector.md`](design/03-ml-detector.md) | ML 이상탐지 설계 | 기준 문서 |
-| [`04-attack-path.md`](design/04-attack-path.md) | Attack Path Engine 설계 | 기준 문서 |
-| [`05-dashboard.md`](design/05-dashboard.md) | Dashboard 설계 | 기준 문서 |
-| [`architecture_diagram.md`](design/architecture_diagram.md) | 전체 흐름 Mermaid 도면 | 쉬운 요약 |
+| [`docs/architecture_v1/README.md`](architecture_v1/README.md) | 읽는 순서 안내 | 쉬운 요약 |
+| [`design-00-overall.md`](architecture_v1/design-00-overall.md) | 전체 파이프라인 오케스트레이션, 공통 컨벤션 | 기준 문서 |
+| [`architecture_diagram.md`](architecture_v1/architecture_diagram.md) | 전체 흐름 Mermaid 도면 | 쉬운 요약 |
+| [`data_contracts.md`](architecture_v1/data_contracts.md) | 스키마 4개의 원본+필드 설명+사용처를 한 문서에 모음. 스키마를 참조/수정할 때는 여기부터 | 기준 문서 |
+| [`sample_dataset.md`](architecture_v1/sample_dataset.md) | 전 모듈 공통 예시 시나리오 (스키마 검증 통과 확인됨) | 기준 문서 |
+| [`design-01-collector.md`](architecture_v1/design-01-collector.md) | Dependency Collector 설계 | 기준 문서 |
+| [`design-02-risk-analyzer.md`](architecture_v1/design-02-risk-analyzer.md) | Risk Analyzer 설계 | 기준 문서 |
+| [`design-03-ml-detector.md`](architecture_v1/design-03-ml-detector.md) | ML 이상탐지 설계 | 기준 문서 |
+| [`design-04-attack-path.md`](architecture_v1/design-04-attack-path.md) | Attack Path Engine 설계 | 기준 문서 |
+| [`design-05-dashboard.md`](architecture_v1/design-05-dashboard.md) | Dashboard 설계 | 기준 문서 |
+| [`schemas/README.md`](../schemas/README.md) | 스키마가 아직 DRAFT임을 명시, 담당 매핑 | 쉬운 요약 |
+| [`schemas/*.schema.json`](../schemas) | 스키마 원본 (JSON Schema, **현재 DRAFT**, 검증 도구가 실제로 참조하는 파일) | 기준 문서 |
 
 ## 상위 이슈 (전체 Epic + 역할별)
 
@@ -87,5 +91,5 @@
 1. [프로젝트 README](../README.md)에서 목적과 현재 상태를 확인합니다
 2. [협업 가이드](../CONTRIBUTING.md)에서 이슈/PR 순서를 확인합니다
 3. [역할과 담당자](governance/OWNERSHIP.md)에서 내 역할(R1~R4)을 찾습니다
-4. [설계 문서 입구](design/README.md)에서 내 모듈 기술 설계를 확인합니다
+4. [설계 문서 입구](architecture_v1/README.md)에서 내 모듈 기술 설계를 확인합니다
 5. 모르는 단어는 [용어집](GLOSSARY.md)에서 찾습니다
