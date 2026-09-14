@@ -14,8 +14,8 @@
 |---|---|---|
 | [`README.md`](../README.md) | 프로젝트 목적, 현재 상태, 전체 흐름을 소개 | 기준 문서 |
 | [`CONTRIBUTING.md`](../CONTRIBUTING.md) | 브랜치·이슈·PR·머지 규칙 | 기준 문서 |
-| [`.github/ISSUE_TEMPLATE/subissue.yml`](../.github/ISSUE_TEMPLATE/subissue.yml) | 하위 이슈 생성 양식 (역할 R1~R4) | 보조 파일 |
-| [`.github/ISSUE_TEMPLATE/pm-subissue.yml`](../.github/ISSUE_TEMPLATE/pm-subissue.yml) | 하위 이슈 생성 양식 (PM/전체, Epic 직속) | 보조 파일 |
+| [`.github/ISSUE_TEMPLATE/subissue.md`](../.github/ISSUE_TEMPLATE/subissue.md) | 하위 이슈 생성 양식 (역할 R1~R4) | 보조 파일 |
+| [`.github/ISSUE_TEMPLATE/pm-subissue.md`](../.github/ISSUE_TEMPLATE/pm-subissue.md) | 하위 이슈 생성 양식 (PM/전체, Epic 직속) | 보조 파일 |
 | [`.github/PULL_REQUEST_TEMPLATE.md`](../.github/PULL_REQUEST_TEMPLATE.md) | PR 기본 양식 | 보조 파일 |
 | [`.github/CODEOWNERS`](../.github/CODEOWNERS) | 스키마 변경 시 자동 리뷰어 지정 | 보조 파일 |
 
