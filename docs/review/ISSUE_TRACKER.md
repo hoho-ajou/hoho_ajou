@@ -6,11 +6,9 @@
 |---|---|---|---|
 | [#1](https://github.com/hoho-ajou/hoho_ajou/issues/1) | AASM 전체 설계 및 구현 조율 (Epic) | 배승원(총괄) | OPEN |
 | [#9](https://github.com/hoho-ajou/hoho_ajou/issues/9) | [R1] Dependency Collector 설계 | 배승원 | OPEN |
-| [#10](https://github.com/hoho-ajou/hoho_ajou/issues/10) | [R2] Risk Analyzer 설계 | (미정) | OPEN |
-| [#11](https://github.com/hoho-ajou/hoho_ajou/issues/11) | [R3] ML 이상탐지 설계 | (미정) | OPEN |
-| [#12](https://github.com/hoho-ajou/hoho_ajou/issues/12) | [R4] Attack Path Engine + Dashboard 설계 | (미정) | OPEN |
-
-R1~R4 상위 이슈는 `docs/roles/*.md`가 원본입니다.
+| [#10](https://github.com/hoho-ajou/hoho_ajou/issues/10) | [R2] Risk Analyzer 설계 | 유다호 | OPEN |
+| [#11](https://github.com/hoho-ajou/hoho_ajou/issues/11) | [R3] ML 이상탐지 설계 | 제유호 | OPEN |
+| [#12](https://github.com/hoho-ajou/hoho_ajou/issues/12) | [R4] Attack Path Engine + Dashboard 설계 | 전선재 | OPEN |
 
 ## 상태 값
 

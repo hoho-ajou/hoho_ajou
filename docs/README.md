@@ -12,7 +12,7 @@
 
 ## 문서 종류
 
-- **기준 문서**: `docs/architecture_v1/`(기술 설계 + 데이터 계약), `docs/contracts/`(이슈/PR 등 협업 스키마), `docs/governance/`(역할·체크리스트). 실제 설계 의미는 이 문서들이 우선합니다.
+- **기준 문서**: `docs/architecture_v1/`(기술 설계 + 데이터 계약), `docs/governance/`(역할·체크리스트). 실제 설계 의미는 이 문서들이 우선합니다.
 - **검토 기록**: `docs/review/`. 실제 Issue 현황과 확정된 설계 결정을 기록합니다.
 - **쉬운 요약**: `docs/GLOSSARY.md`, `docs/DOCUMENT_GUIDE.md`.
 

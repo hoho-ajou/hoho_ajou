@@ -2,7 +2,7 @@
 
 전체 파이프라인(Collector → Risk Analyzer/ML → Attack Path Engine → Dashboard)을 구현하는 데 필요한 문서를 한 디렉토리에 평평하게 모은 스냅샷입니다. LLM에게 구현을 맡길 때는 이 폴더 하나만 넘기면 됩니다.
 
-기술 설계·데이터 계약의 SSOT입니다(예전에는 `docs/design/`, `docs/contracts/`로 흩어져 있었으나 이 폴더로 합쳤습니다). 중복 방지를 위해 역할 정의(`docs/roles/`)와 결정 기록(`docs/review/decisions/`)은 여기 포함하지 않습니다 — 각 `design-*.md`의 "확정 사항" 절에 관련 결정이 이미 요약되어 있습니다.
+기술 설계·데이터 계약의 SSOT입니다(예전에는 `docs/design/`, `docs/contracts/`로 흩어져 있었으나 이 폴더로 합쳤습니다). 중복 방지를 위해 역할 정의(GitHub Issue #9~12 자체가 원본)와 결정 기록(`docs/review/decisions.md`)은 여기 포함하지 않습니다 — 각 `design-*.md`의 "확정 사항" 절에 관련 결정이 이미 요약되어 있습니다.
 
 ## 구성
 

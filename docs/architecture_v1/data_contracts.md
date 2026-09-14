@@ -399,4 +399,4 @@
 ## 관련 문서
 
 - 값 예시는 [`sample_dataset.md`](sample_dataset.md)
-- 이 스키마들이 왜 지금 형태로 정해졌는지는 [`docs/review/decisions/`](../review/decisions/README.md)
+- 이 스키마들이 왜 지금 형태로 정해졌는지는 [`docs/review/decisions.md`](../review/decisions.md)

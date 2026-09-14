@@ -1,6 +1,6 @@
 # 용어집 (구현자용 — schemas/design 전 모듈 공통)
 
-`study_week1/README.md` §3의 용어집이 "처음 배우는 사람" 대상이라면, `study_week1/README.md` §3의 용어집이 "처음 배우는 사람" 대상이라면, 이 문서는 **schemas/*.json과 docs/architecture_v1/design-*.md를 그대로 구현할 사람(또는 AI)** 대상입니다. 각 스키마 필드명이 어느 용어에서 왔는지 연결하는 데 씁니다.
+이 문서는 **schemas/*.json과 docs/architecture_v1/design-*.md를 그대로 구현할 사람(또는 AI)** 대상입니다. 각 스키마 필드명이 어느 용어에서 왔는지 연결하는 데 씁니다.
 
 ## 전체 파이프라인 공통
 
@@ -64,10 +64,6 @@
 
 | 용어 | 정의 |
 |---|---|
-| **Conventional Commits** | `<type>(<module>): <설명>` 형식의 커밋 메시지 규칙. `docs/contracts/pr_schema.md` 참고 |
-| **CODEOWNERS** | 특정 경로 변경 시 자동으로 리뷰어를 지정하는 GitHub 기능. 현재 `.github/CODEOWNERS`는 역할명 placeholder 상태 |
-| **Epic / 하위 이슈** | Epic은 모듈 단위 큰 목표(`docs/epics/`), 하위 이슈는 그 안의 실행 단위 작업. 스키마는 `docs/contracts/epic_schema.md`, `docs/contracts/subissue_schema.md`(역할), `docs/contracts/pm_subissue_schema.md`(PM 직속) |
-
-## 초보자용 배경 설명이 필요하면
-
-용어의 배경(왜 중요한지, 실제 공격 사례 등)은 `study_week1/README.md` §1~3, `study_week1/architecture.html`을 참고하세요. 이 문서는 "정의"만, 그쪽은 "왜/사례"까지 다룹니다.
+| **Conventional Commits** | `<type>(<module>): <설명>` 형식의 커밋 메시지 규칙. `CONTRIBUTING.md` §5 참고 |
+| **CODEOWNERS** | 특정 경로 변경 시 자동으로 리뷰어를 지정하는 GitHub 기능. 실제 매핑은 `.github/CODEOWNERS` 참고 |
+| **Epic / 하위 이슈** | Epic은 전체 조율을 담당하는 GitHub Issue #1 하나, 하위 이슈는 그 안의 실행 단위 작업. 작성 양식은 `.github/ISSUE_TEMPLATE/*.md` |

@@ -34,26 +34,16 @@
 | [`docs/governance/OWNERSHIP.md`](governance/OWNERSHIP.md) | R1~R4 역할별 담당자, 목표/범위/완료조건, CODEOWNERS | 기준 문서 |
 | [`docs/governance/REVIEW_CHECKLIST.md`](governance/REVIEW_CHECKLIST.md) | 설계 문서 리뷰 체크리스트 | 기준 문서 |
 
-## 모듈 간 공통 계약
+## 이슈/PR 양식
 
-| 파일 | 쉽게 말하면 | 구분 |
-|---|---|---|
-| [`docs/contracts/epic_schema.md`](contracts/epic_schema.md) | 전체 Epic 공통 형식 | 기준 문서 |
-| [`docs/contracts/role_issue_schema.md`](contracts/role_issue_schema.md) | R1~R4 역할 상위 이슈 공통 형식 | 기준 문서 |
-| [`docs/contracts/subissue_schema.md`](contracts/subissue_schema.md) | 하위 이슈 공통 형식 (역할 R1~R4 소속) | 기준 문서 |
-| [`docs/contracts/pm_subissue_schema.md`](contracts/pm_subissue_schema.md) | 하위 이슈 공통 형식 (PM/전체, Epic 직속) | 기준 문서 |
-| [`docs/contracts/pr_schema.md`](contracts/pr_schema.md) | PR 공통 형식·머지 조건 | 기준 문서 |
-| [`docs/contracts/decision_record_schema.md`](contracts/decision_record_schema.md) | Epic·역할별 결정 기록 공통 형식 | 기준 문서 |
-
-데이터 계약 스키마(`data_contracts.md`, `sample_dataset.md`, `schemas/*.json`)는 아래 "Architecture" 섹션 참고.
+이슈·PR 작성 형식은 실제 GitHub 템플릿(`.github/ISSUE_TEMPLATE/*.md`, `.github/PULL_REQUEST_TEMPLATE.md`)이 자기설명적이라 별도 규칙 문서를 두지 않습니다. 데이터 계약 스키마(`data_contracts.md`, `sample_dataset.md`, `schemas/*.json`)는 아래 "Architecture" 섹션 참고.
 
 ## 검토 업무와 기록
 
 | 파일 | 쉽게 말하면 | 구분 |
 |---|---|---|
 | [`docs/review/ISSUE_TRACKER.md`](review/ISSUE_TRACKER.md) | 실제 GitHub Issue 번호·담당자·상태 | 쉬운 요약 |
-| [`docs/review/decisions/README.md`](review/decisions/README.md) | 확정된 설계 결정 목록 (Epic 1개 + 역할 4개) | 기준 문서 |
-| `docs/review/decisions/00-overall.md`, `r1~r4-*.md` | Epic·역할별 결정 기록 | 기준 기록 |
+| [`docs/review/decisions.md`](review/decisions.md) | 확정된 설계 결정 기록 — Epic 1개 + 역할 4개 섹션이 파일 하나에 |  기준 문서 |
 
 ## Architecture (기술 설계) 기준 문서 — `docs/architecture_v1/`
 
@@ -76,15 +66,7 @@
 
 ## 상위 이슈 (전체 Epic + 역할별)
 
-| 파일 | 구분 |
-|---|---|
-| [`docs/epics/00-overall.md`](epics/00-overall.md) | 전체 Epic — GitHub Issue #1 |
-| [`docs/roles/r1-collector.md`](roles/r1-collector.md) | R1 상위 이슈 (Epic #1 승계) |
-| [`docs/roles/r2-risk-analyzer.md`](roles/r2-risk-analyzer.md) | R2 상위 이슈 (Epic #1 승계) |
-| [`docs/roles/r3-ml-detector.md`](roles/r3-ml-detector.md) | R3 상위 이슈 (Epic #1 승계) |
-| [`docs/roles/r4-attack-path-dashboard.md`](roles/r4-attack-path-dashboard.md) | R4 상위 이슈 (Epic #1 승계) |
-
-요약표는 [`docs/governance/OWNERSHIP.md`](governance/OWNERSHIP.md).
+전체 Epic(#1)과 R1~R4 상위 이슈(#9~12) 전부 GitHub Issue 자체가 원본입니다(별도 로컬 문서 없음). 요약표는 [`docs/governance/OWNERSHIP.md`](governance/OWNERSHIP.md).
 
 ## 무엇부터 읽으면 되나요?
 

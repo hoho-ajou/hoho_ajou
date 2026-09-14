@@ -44,10 +44,10 @@ aasm/
 
 **모든 작업은 이슈로 시작합니다.**
 
-- 전체 Epic: `docs/epics/00-overall.md` = GitHub Issue #1 하나뿐. 형식은 [`docs/contracts/epic_schema.md`](docs/contracts/epic_schema.md).
-- 역할(R1~R4) 상위 이슈: `docs/roles/*.md` — Epic #1을 승계(`Part of #1`)하며, 역할별 목표·범위·완료조건을 담음. 형식은 [`docs/contracts/role_issue_schema.md`](docs/contracts/role_issue_schema.md). 요약표는 [`docs/governance/OWNERSHIP.md`](docs/governance/OWNERSHIP.md).
-- 하위 이슈: 담당자가 자기 역할 상위 이슈 아래 직접 생성. 형식은 [`docs/contracts/subissue_schema.md`](docs/contracts/subissue_schema.md), GitHub 템플릿은 [`.github/ISSUE_TEMPLATE/subissue.md`](.github/ISSUE_TEMPLATE/subissue.md).
-- PM/전체 하위 이슈(특정 역할에 속하지 않는 총괄의 전체 조율 작업): Epic(#1) 직속으로 생성. 형식은 [`docs/contracts/pm_subissue_schema.md`](docs/contracts/pm_subissue_schema.md), GitHub 템플릿은 [`.github/ISSUE_TEMPLATE/pm-subissue.md`](.github/ISSUE_TEMPLATE/pm-subissue.md).
+- 전체 Epic: GitHub Issue #1 하나뿐.
+- 역할(R1~R4) 상위 이슈: GitHub Issue로 직접 존재(Epic #1을 승계, `Part of #1`), 역할별 목표·범위·완료조건을 담음. 요약표는 [`docs/governance/OWNERSHIP.md`](docs/governance/OWNERSHIP.md).
+- 하위 이슈: 담당자가 자기 역할 상위 이슈 아래 직접 생성. GitHub 템플릿은 [`.github/ISSUE_TEMPLATE/subissue.md`](.github/ISSUE_TEMPLATE/subissue.md).
+- PM/전체 하위 이슈(특정 역할에 속하지 않는 총괄의 전체 조율 작업): Epic(#1) 직속으로 생성. GitHub 템플릿은 [`.github/ISSUE_TEMPLATE/pm-subissue.md`](.github/ISSUE_TEMPLATE/pm-subissue.md).
 - 진행 현황: [`docs/review/ISSUE_TRACKER.md`](docs/review/ISSUE_TRACKER.md)
 
 라벨은 쓰지 않습니다 — 4인 규모에서는 이슈 제목의 `[모듈]` 접두사와 담당자 지정만으로 충분합니다. 진행 상태는 [`docs/review/ISSUE_TRACKER.md`](docs/review/ISSUE_TRACKER.md)로 관리합니다.
@@ -66,7 +66,7 @@ docs(schemas): attack_graph 스키마에 필드 설명 추가 (#31)
 
 ## 6. Pull Request 정책
 
-PR 템플릿·필드별 요구사항·머지 조건은 [`docs/contracts/pr_schema.md`](docs/contracts/pr_schema.md)를 따릅니다. 핵심만 요약하면:
+PR 템플릿은 [`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md). 머지 조건 핵심만 요약하면:
 
 - **리뷰어 1명 이상 승인 필수** — 자기 코드 자기가 머지 금지
 - **누가 리뷰하는가**: 그 모듈의 출력을 받아쓰는 다음 담당자가 우선 리뷰 (예: Collector PR → Risk Analyzer·ML 담당자)
