@@ -1,6 +1,6 @@
 # Risk Analyzer 기술 설계 문서
 
-> 담당: 위험분석 · 관련: `study_week1/architecture.html`(패키지 위험도 × 에이전트 권한), `study_week1/README.md`(CVE/CVSS/타이포스쿼팅 용어), `resources/curated_list.md` F(타이포스쿼팅)·W(EPSS/CVSS/NVD)
+> 담당: 위험분석
 
 ## 1. 배경 및 설계 목표
 
