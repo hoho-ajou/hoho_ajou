@@ -1,6 +1,6 @@
 # 전체 아키텍처 설계 도면
 
-`docs/architecture_v1/design-00-overall.md` §2의 파이프라인 흐름을 그림으로 옮긴 것입니다. 텍스트 설명이 1차 자료(SSOT)이고, 이 도면은 그걸 빠르게 훑기 위한 보조 자료입니다.
+`docs/architecture_v1/01-overall.md` §2의 파이프라인 흐름을 그림으로 옮긴 것입니다. 텍스트 설명이 1차 자료(SSOT)이고, 이 도면은 그걸 빠르게 훑기 위한 보조 자료입니다.
 
 ## 1. 모듈 간 데이터 흐름 (fan-out/fan-in)
 
@@ -23,7 +23,7 @@ flowchart LR
 
 - Risk Analyzer와 ML은 Collector 출력을 **동시에(병렬)** 받아 각자 독립 실행
 - Attack Path Engine은 **Risk Analyzer + ML 둘 다 끝나야** 시작 (fan-in)
-- 각 화살표 라벨이 `schemas/*.json` 파일명 — 자세한 필드는 `data_contracts.md` 참고
+- 각 화살표 라벨이 `schemas/*.json` 파일명 — 자세한 필드는 `03-data-contracts.md` 참고
 
 ## 2. Collector 내부 처리 순서
 
@@ -44,7 +44,7 @@ flowchart TD
 
 ## 3. 공격 경로 예시 (샘플 데이터셋 기준)
 
-`sample_dataset.md`의 시나리오를 그래프로 그리면:
+`04-sample-dataset.md`의 시나리오를 그래프로 그리면:
 
 ```mermaid
 flowchart LR

@@ -4,7 +4,7 @@
 
 - **원본(SSOT)은 여전히 `schemas/*.schema.json` 파일 자체**입니다 — 실제 검증(`scripts/validate_docs.py`)은 그 파일로 돕니다. 이 문서의 JSON 블록은 그 내용을 그대로 옮겨온 것이라, 스키마를 고치면 이 문서도 같이 고쳐야 합니다.
 - 필드를 바꾸는 PR은 `CONTRIBUTING.md` §3에 따라 CODEOWNERS(아래 각 스키마의 담당자) 전원 승인이 필요합니다. 실제 담당자는 [`docs/governance/OWNERSHIP.md`](../governance/OWNERSHIP.md).
-- 모든 값의 실제 예시는 [`sample_dataset.md`](sample_dataset.md) 참고.
+- 모든 값의 실제 예시는 [`04-sample-dataset.md`](04-sample-dataset.md) 참고.
 
 ---
 
@@ -398,5 +398,5 @@
 
 ## 관련 문서
 
-- 값 예시는 [`sample_dataset.md`](sample_dataset.md)
+- 값 예시는 [`04-sample-dataset.md`](04-sample-dataset.md)
 - 이 스키마들이 왜 지금 형태로 정해졌는지는 [`docs/review/decisions.md`](../review/decisions.md)

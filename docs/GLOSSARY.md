@@ -1,6 +1,6 @@
 # 용어집 (구현자용 — schemas/design 전 모듈 공통)
 
-이 문서는 **schemas/*.json과 docs/architecture_v1/design-*.md를 그대로 구현할 사람(또는 AI)** 대상입니다. 각 스키마 필드명이 어느 용어에서 왔는지 연결하는 데 씁니다.
+이 문서는 **schemas/*.json과 docs/architecture_v1/의 설계 문서를 그대로 구현할 사람(또는 AI)** 대상입니다. 각 스키마 필드명이 어느 용어에서 왔는지 연결하는 데 씁니다.
 
 ## 전체 파이프라인 공통
 

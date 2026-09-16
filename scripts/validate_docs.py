@@ -19,7 +19,7 @@ errors: list[str] = []
 
 
 def check_sample_dataset_against_schemas() -> None:
-    path = ROOT / "docs/architecture_v1/sample_dataset.md"
+    path = ROOT / "docs/architecture_v1/04-sample-dataset.md"
     content = path.read_text()
     blocks = re.findall(r"```json\n(.*?)\n```", content, re.S)
     schema_files = [

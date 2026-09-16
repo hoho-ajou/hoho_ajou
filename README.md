@@ -30,17 +30,17 @@ NOT_IMPLEMENTED
 
 | 모듈 | 설명 | 설계 문서 | 담당 역할 |
 |---|---|---|---|
-| Dependency Collector | 의존성·외부연동 자동 수집, SBOM 생성 | [docs/architecture_v1/design-01-collector.md](docs/architecture_v1/design-01-collector.md) | R1 |
-| Risk Analyzer | 위험도 점수화 (CVSS+EPSS+타이포스쿼팅+권한가중치) | [docs/architecture_v1/design-02-risk-analyzer.md](docs/architecture_v1/design-02-risk-analyzer.md) | R2 |
-| ML 이상탐지 | 신규/변종 악성 패키지 탐지 (Random Forest) | [docs/architecture_v1/design-03-ml-detector.md](docs/architecture_v1/design-03-ml-detector.md) | R3 |
-| Attack Path Engine | 공격경로 그래프 생성 (NetworkX) | [docs/architecture_v1/design-04-attack-path.md](docs/architecture_v1/design-04-attack-path.md) | R4 |
-| Dashboard | 웹 시각화 (Cytoscape.js) | [docs/architecture_v1/design-05-dashboard.md](docs/architecture_v1/design-05-dashboard.md) | R4 |
+| Dependency Collector | 의존성·외부연동 자동 수집, SBOM 생성 | [docs/architecture_v1/05-collector.md](docs/architecture_v1/05-collector.md) | R1 |
+| Risk Analyzer | 위험도 점수화 (CVSS+EPSS+타이포스쿼팅+권한가중치) | [docs/architecture_v1/06-risk-analyzer.md](docs/architecture_v1/06-risk-analyzer.md) | R2 |
+| ML 이상탐지 | 신규/변종 악성 패키지 탐지 (Random Forest) | [docs/architecture_v1/07-ml-detector.md](docs/architecture_v1/07-ml-detector.md) | R3 |
+| Attack Path Engine | 공격경로 그래프 생성 (NetworkX) | [docs/architecture_v1/08-attack-path.md](docs/architecture_v1/08-attack-path.md) | R4 |
+| Dashboard | 웹 시각화 (Cytoscape.js) | [docs/architecture_v1/09-dashboard.md](docs/architecture_v1/09-dashboard.md) | R4 |
 | `schemas/` | 모듈 간 데이터 계약 (JSON Schema) | — | — |
 
 역할별 담당자는 [docs/governance/OWNERSHIP.md](docs/governance/OWNERSHIP.md) 참고.
 
-전체 설계: [docs/architecture_v1/design-00-overall.md](docs/architecture_v1/design-00-overall.md) · [아키텍처 도면](docs/architecture_v1/architecture_diagram.md)
-모듈 간 연결: [공통 샘플 데이터셋](docs/architecture_v1/sample_dataset.md) · [데이터 공통 계약](docs/architecture_v1/data_contracts.md)
+전체 설계: [docs/architecture_v1/01-overall.md](docs/architecture_v1/01-overall.md) · [아키텍처 도면](docs/architecture_v1/02-architecture-diagram.md)
+모듈 간 연결: [공통 샘플 데이터셋](docs/architecture_v1/04-sample-dataset.md) · [데이터 공통 계약](docs/architecture_v1/03-data-contracts.md)
 
 ## 설계 검토 운영 방식
 

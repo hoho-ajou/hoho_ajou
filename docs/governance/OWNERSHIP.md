@@ -4,11 +4,11 @@
 
 | 역할 | 담당자 | 담당 모듈 | 상위 이슈 | 담당 문서 | 결정 기록 | CODEOWNERS 대상 |
 |---|---|---|---|---|---|---|
-| 총괄(PM) | 배승원 ([@baeseungwon1010](https://github.com/baeseungwon1010)) — R1 겸임 | 전체 오케스트레이션 | [#1](https://github.com/hoho-ajou/hoho_ajou/issues/1) | `docs/architecture_v1/design-00-overall.md` | [결정 기록](../review/decisions.md#epic--전체-오케스트레이션) | — |
-| R1 | 배승원 ([@baeseungwon1010](https://github.com/baeseungwon1010)) | Dependency Collector | [#9](https://github.com/hoho-ajou/hoho_ajou/issues/9) | `docs/architecture_v1/design-01-collector.md` | [결정 기록](../review/decisions.md#r1--dependency-collector) | `schemas/collector_output.schema.json` |
-| R2 | 유다호 ([@daho-boop](https://github.com/daho-boop)) | Risk Analyzer | [#10](https://github.com/hoho-ajou/hoho_ajou/issues/10) | `docs/architecture_v1/design-02-risk-analyzer.md` | [결정 기록](../review/decisions.md#r2--risk-analyzer) | `schemas/risk_score.schema.json` |
-| R3 | 제유호 ([@jeyuho](https://github.com/jeyuho)) | ML 이상탐지 | [#11](https://github.com/hoho-ajou/hoho_ajou/issues/11) | `docs/architecture_v1/design-03-ml-detector.md` | [결정 기록](../review/decisions.md#r3--ml-이상탐지) | `schemas/ml_result.schema.json` |
-| R4 | 전선재 ([@ryanjeon1](https://github.com/ryanjeon1)) | Attack Path Engine + Dashboard | [#12](https://github.com/hoho-ajou/hoho_ajou/issues/12) | `docs/architecture_v1/design-04-attack-path.md`, `docs/architecture_v1/design-05-dashboard.md` | [결정 기록](../review/decisions.md#r4--attack-path-engine--dashboard) | `schemas/attack_graph.schema.json` |
+| 총괄(PM) | 배승원 ([@baeseungwon1010](https://github.com/baeseungwon1010)) — R1 겸임 | 전체 오케스트레이션 | [#1](https://github.com/hoho-ajou/hoho_ajou/issues/1) | `docs/architecture_v1/01-overall.md` | [결정 기록](../review/decisions.md#epic--전체-오케스트레이션) | — |
+| R1 | 배승원 ([@baeseungwon1010](https://github.com/baeseungwon1010)) | Dependency Collector | [#9](https://github.com/hoho-ajou/hoho_ajou/issues/9) | `docs/architecture_v1/05-collector.md` | [결정 기록](../review/decisions.md#r1--dependency-collector) | `schemas/collector_output.schema.json` |
+| R2 | 유다호 ([@daho-boop](https://github.com/daho-boop)) | Risk Analyzer | [#10](https://github.com/hoho-ajou/hoho_ajou/issues/10) | `docs/architecture_v1/06-risk-analyzer.md` | [결정 기록](../review/decisions.md#r2--risk-analyzer) | `schemas/risk_score.schema.json` |
+| R3 | 제유호 ([@jeyuho](https://github.com/jeyuho)) | ML 이상탐지 | [#11](https://github.com/hoho-ajou/hoho_ajou/issues/11) | `docs/architecture_v1/07-ml-detector.md` | [결정 기록](../review/decisions.md#r3--ml-이상탐지) | `schemas/ml_result.schema.json` |
+| R4 | 전선재 ([@ryanjeon1](https://github.com/ryanjeon1)) | Attack Path Engine + Dashboard | [#12](https://github.com/hoho-ajou/hoho_ajou/issues/12) | `docs/architecture_v1/08-attack-path.md`, `docs/architecture_v1/09-dashboard.md` | [결정 기록](../review/decisions.md#r4--attack-path-engine--dashboard) | `schemas/attack_graph.schema.json` |
 
 R1은 총괄을 겸합니다(팀 구성상 4인이 5개 모듈+전체 조율을 나눠 맡음). 각 역할의 상세 목표·범위·완료조건은 위 상위 이슈(GitHub) 자체가 원본입니다.
 

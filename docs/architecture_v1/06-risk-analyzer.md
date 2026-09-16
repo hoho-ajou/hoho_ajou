@@ -101,7 +101,7 @@ risk-analyzer/
 
 ## 5. 출력 스키마 초안 (`schemas/risk_score.schema.json`)
 
-실제 필드 구조와 값 예시는 [`data_contracts.md`](data_contracts.md)와 [`sample_dataset.md`](sample_dataset.md) 참고. 스키마 확정에는 Attack Path Engine 담당의 리뷰가 필요하다(CODEOWNERS). 특히 `signals` 세부 필드가 그래프 노드 속성으로 그대로 쓰기 충분한지 확인 요청.
+실제 필드 구조와 값 예시는 [`03-data-contracts.md`](03-data-contracts.md)와 [`04-sample-dataset.md`](04-sample-dataset.md) 참고. 스키마 확정에는 Attack Path Engine 담당의 리뷰가 필요하다(CODEOWNERS). 특히 `signals` 세부 필드가 그래프 노드 속성으로 그대로 쓰기 충분한지 확인 요청.
 
 ## 확정 사항 (교차검토 반영)
 
