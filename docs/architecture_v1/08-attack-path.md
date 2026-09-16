@@ -61,7 +61,7 @@ attack-path/
 
 ## 6. 출력 스키마 초안 (`schemas/attack_graph.schema.json`, Dashboard 소비용)
 
-실제 필드 구조와 값 예시는 [`data_contracts.md`](data_contracts.md)와 [`sample_dataset.md`](sample_dataset.md) 참고. (초안이므로 Dashboard 담당 리뷰 후 필드명·타입 확정 필요)
+실제 필드 구조와 값 예시는 [`03-data-contracts.md`](03-data-contracts.md)와 [`04-sample-dataset.md`](04-sample-dataset.md) 참고. (초안이므로 Dashboard 담당 리뷰 후 필드명·타입 확정 필요)
 
 ## 확정 사항 (교차검토 반영)
 

@@ -80,7 +80,7 @@ Epic과 R1~R4 전체를 통틀어 확정된 결정을 이 파일 하나에 시�
 
 **최종 결정**: 기본 미수집. 대신 `maintainer_accounts[].account_created_at`을 `null` + `data_status: "not_collected"`로 스키마에 예약해두어, 추후 필요성이 확정되면 별도 수집기를 붙일 수 있게 함.
 
-**근거 문서**: `docs/architecture_v1/design-01-collector.md` "확정 사항 (교차검토 반영)"
+**근거 문서**: `docs/architecture_v1/05-collector.md` "확정 사항 (교차검토 반영)"
 
 ---
 
@@ -120,7 +120,7 @@ Epic과 R1~R4 전체를 통틀어 확정된 결정을 이 파일 하나에 시�
 
 **최종 결정**: 기존 설계 그대로 둘 다 유지. 각 필드의 용도만 문서에 명시적으로 추가.
 
-**근거 문서**: `docs/architecture_v1/design-02-risk-analyzer.md` "확정 사항 (교차검토 반영)" Q6~Q9
+**근거 문서**: `docs/architecture_v1/06-risk-analyzer.md` "확정 사항 (교차검토 반영)" Q6~Q9
 
 ---
 
@@ -144,7 +144,7 @@ Epic과 R1~R4 전체를 통틀어 확정된 결정을 이 파일 하나에 시�
 
 **최종 결정**: 같은 노드 위의 독립된 두 속성으로 유지. 결합·가중치 부여는 Attack Path Engine의 경로 스코어링 공식에서 처리 (`node_weight = w1 * risk_score + w2 * (confidence_score * 100)`, w1/w2는 Attack Path Engine이 튜닝). `is_flagged`(bool)도 별도 필드로 유지해 임계값 기반 필터링에 사용 가능하게 함.
 
-**근거 문서**: `docs/architecture_v1/design-03-ml-detector.md` "확정 사항 (교차검토 반영)" Q10~Q11
+**근거 문서**: `docs/architecture_v1/07-ml-detector.md` "확정 사항 (교차검토 반영)" Q10~Q11
 
 ---
 
@@ -192,6 +192,6 @@ Epic과 R1~R4 전체를 통틀어 확정된 결정을 이 파일 하나에 시�
 
 **최종 결정**: 모든 `Package`/`Agent`/`Permission` 노드에 사전 계산된 `risk_score`(0-100 정규화), 모든 `paths[]`에 `overall_risk_score`를 채워 넘김. 각 노드는 `label`, 타입별 `attributes`도 포함. `export.py`가 `node_sequence`/`edge_sequence`의 참조 무결성을 검증 후 파일을 씀(단위 테스트로 강제).
 
-**근거 문서**: `docs/architecture_v1/design-04-attack-path.md` "확정 사항 (교차검토 반영)" 1~5, `docs/architecture_v1/design-05-dashboard.md` §6-1
+**근거 문서**: `docs/architecture_v1/08-attack-path.md` "확정 사항 (교차검토 반영)" 1~5, `docs/architecture_v1/09-dashboard.md` §6-1
 
 [^1]: "Mini Shai-Hulud" 공급망 공격, 2026년 5월. [The Hacker News](https://thehackernews.com/2026/05/mini-shai-hulud-compromises.html)

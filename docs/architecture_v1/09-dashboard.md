@@ -11,7 +11,7 @@
 
 ## 2. 웹 스택: FastAPI(얇은 백엔드) + 정적 JS 프론트엔드
 
-`docs/architecture_v1/design-00-overall.md`는 "Dashboard만 JS(Node 20+)"로 잠정 제안했으나, 이를 다음과 같이 보완 제안합니다.
+`docs/architecture_v1/01-overall.md`는 "Dashboard만 JS(Node 20+)"로 잠정 제안했으나, 이를 다음과 같이 보완 제안합니다.
 
 **결론: 아주 얇은 FastAPI 백엔드(Python) + 빌드 도구 없는 순수 JS(Cytoscape.js) 프론트엔드.**
 
@@ -37,7 +37,7 @@
 
 ## 5. Attack Path Engine에 요청하는 INPUT 스키마 (`schemas/attack_graph.schema.json`)
 
-Dashboard는 아래 필드가 **반드시** 채워진 상태로 넘어와야 자체 재계산 없이 바로 렌더링할 수 있습니다 — 실제 필드 구조와 값 예시는 [`data_contracts.md`](data_contracts.md)와 [`sample_dataset.md`](sample_dataset.md) 참고.
+Dashboard는 아래 필드가 **반드시** 채워진 상태로 넘어와야 자체 재계산 없이 바로 렌더링할 수 있습니다 — 실제 필드 구조와 값 예시는 [`03-data-contracts.md`](03-data-contracts.md)와 [`04-sample-dataset.md`](04-sample-dataset.md) 참고.
 
 ## 6-1. 확정 사항 (교차검토 반영)
 

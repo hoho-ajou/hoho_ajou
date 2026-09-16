@@ -42,7 +42,7 @@ collector/
 
 ## 4. 출력 스키마 초안 (`schemas/collector_output.schema.json`)
 
-실제 필드 구조와 값 예시는 [`data_contracts.md`](data_contracts.md)와 [`sample_dataset.md`](sample_dataset.md) 참고. 스키마 확정에는 `CONTRIBUTING.md` 규칙에 따라 Risk Analyzer·ML 담당자 승인이 필요합니다.
+실제 필드 구조와 값 예시는 [`03-data-contracts.md`](03-data-contracts.md)와 [`04-sample-dataset.md`](04-sample-dataset.md) 참고. 스키마 확정에는 `CONTRIBUTING.md` 규칙에 따라 Risk Analyzer·ML 담당자 승인이 필요합니다.
 
 ## 확정 사항 (교차검토 반영)
 

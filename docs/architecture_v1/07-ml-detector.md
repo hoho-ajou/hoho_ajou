@@ -64,7 +64,7 @@ ml-detector/
 
 ## 7. 출력 JSON 스키마 (DRAFT — `schemas/ml_result.schema.json`)
 
-실제 필드 구조와 값 예시는 [`data_contracts.md`](data_contracts.md)와 [`sample_dataset.md`](sample_dataset.md) 참고. 확정에는 Attack Path Engine 담당자의 검토·승인이 필요하다(`CONTRIBUTING.md` CODEOWNERS 규칙).
+실제 필드 구조와 값 예시는 [`03-data-contracts.md`](03-data-contracts.md)와 [`04-sample-dataset.md`](04-sample-dataset.md) 참고. 확정에는 Attack Path Engine 담당자의 검토·승인이 필요하다(`CONTRIBUTING.md` CODEOWNERS 규칙).
 
 ## 확정 사항 (교차검토 반영)
 

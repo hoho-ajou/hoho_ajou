@@ -1,11 +1,11 @@
 # 설계 문서 리뷰 체크리스트
 
-설계 문서(`docs/architecture_v1/design-0X-*.md`)를 "완료"로 표시하기 전, 작성자와 리뷰어가 공통으로 확인하는 항목입니다. **구현자가 읽어도 모호함이 없는지**가 기준입니다.
+설계 문서(`docs/architecture_v1/05-collector.md` ~ `09-dashboard.md`)를 "완료"로 표시하기 전, 작성자와 리뷰어가 공통으로 확인하는 항목입니다. **구현자가 읽어도 모호함이 없는지**가 기준입니다.
 
 ## 작성자 자가 점검
 
 - [ ] 핵심 함수/클래스의 시그니처(입력 타입 → 출력 타입)가 명시되어 있다
-- [ ] 최소 1개 이상의 구체적 입력→출력 예시가 있다 (가능하면 [`docs/architecture_v1/sample_dataset.md`](../architecture_v1/sample_dataset.md) 시나리오 재사용)
+- [ ] 최소 1개 이상의 구체적 입력→출력 예시가 있다 (가능하면 [`docs/architecture_v1/04-sample-dataset.md`](../architecture_v1/04-sample-dataset.md) 시나리오 재사용)
 - [ ] 엣지케이스가 "상황 → 기대 동작" 표로 정리되어 있다 (해당 역할의 완료조건에 명시된 최소 개수 이상 — [`OWNERSHIP.md`](OWNERSHIP.md) 참고)
 - [ ] 이 모듈이 내보내는/받는 필드가 관련 `schemas/*.schema.json`과 필드 단위로 100% 일치한다
 - [ ] 다른 모듈에 새로 요청하는 입력 필드가 있다면, 그 모듈 담당자와 협의 완료

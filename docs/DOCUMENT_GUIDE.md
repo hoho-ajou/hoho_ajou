@@ -36,7 +36,7 @@
 
 ## 이슈/PR 양식
 
-이슈·PR 작성 형식은 실제 GitHub 템플릿(`.github/ISSUE_TEMPLATE/*.md`, `.github/PULL_REQUEST_TEMPLATE.md`)이 자기설명적이라 별도 규칙 문서를 두지 않습니다. 데이터 계약 스키마(`data_contracts.md`, `sample_dataset.md`, `schemas/*.json`)는 아래 "Architecture" 섹션 참고.
+이슈·PR 작성 형식은 실제 GitHub 템플릿(`.github/ISSUE_TEMPLATE/*.md`, `.github/PULL_REQUEST_TEMPLATE.md`)이 자기설명적이라 별도 규칙 문서를 두지 않습니다. 데이터 계약 스키마(`03-data-contracts.md`, `04-sample-dataset.md`, `schemas/*.json`)는 아래 "Architecture" 섹션 참고.
 
 ## 검토 업무와 기록
 
@@ -52,15 +52,15 @@
 | 파일 | 쉽게 말하면 | 구분 |
 |---|---|---|
 | [`docs/architecture_v1/README.md`](architecture_v1/README.md) | 읽는 순서 안내 | 쉬운 요약 |
-| [`design-00-overall.md`](architecture_v1/design-00-overall.md) | 전체 파이프라인 오케스트레이션, 공통 컨벤션 | 기준 문서 |
-| [`architecture_diagram.md`](architecture_v1/architecture_diagram.md) | 전체 흐름 Mermaid 도면 | 쉬운 요약 |
-| [`data_contracts.md`](architecture_v1/data_contracts.md) | 스키마 4개의 원본+필드 설명+사용처를 한 문서에 모음. 스키마를 참조/수정할 때는 여기부터 | 기준 문서 |
-| [`sample_dataset.md`](architecture_v1/sample_dataset.md) | 전 모듈 공통 예시 시나리오 (스키마 검증 통과 확인됨) | 기준 문서 |
-| [`design-01-collector.md`](architecture_v1/design-01-collector.md) | Dependency Collector 설계 | 기준 문서 |
-| [`design-02-risk-analyzer.md`](architecture_v1/design-02-risk-analyzer.md) | Risk Analyzer 설계 | 기준 문서 |
-| [`design-03-ml-detector.md`](architecture_v1/design-03-ml-detector.md) | ML 이상탐지 설계 | 기준 문서 |
-| [`design-04-attack-path.md`](architecture_v1/design-04-attack-path.md) | Attack Path Engine 설계 | 기준 문서 |
-| [`design-05-dashboard.md`](architecture_v1/design-05-dashboard.md) | Dashboard 설계 | 기준 문서 |
+| [`01-overall.md`](architecture_v1/01-overall.md) | 전체 파이프라인 오케스트레이션, 공통 컨벤션 | 기준 문서 |
+| [`02-architecture-diagram.md`](architecture_v1/02-architecture-diagram.md) | 전체 흐름 Mermaid 도면 | 쉬운 요약 |
+| [`03-data-contracts.md`](architecture_v1/03-data-contracts.md) | 스키마 4개의 원본+필드 설명+사용처를 한 문서에 모음. 스키마를 참조/수정할 때는 여기부터 | 기준 문서 |
+| [`04-sample-dataset.md`](architecture_v1/04-sample-dataset.md) | 전 모듈 공통 예시 시나리오 (스키마 검증 통과 확인됨) | 기준 문서 |
+| [`05-collector.md`](architecture_v1/05-collector.md) | Dependency Collector 설계 | 기준 문서 |
+| [`06-risk-analyzer.md`](architecture_v1/06-risk-analyzer.md) | Risk Analyzer 설계 | 기준 문서 |
+| [`07-ml-detector.md`](architecture_v1/07-ml-detector.md) | ML 이상탐지 설계 | 기준 문서 |
+| [`08-attack-path.md`](architecture_v1/08-attack-path.md) | Attack Path Engine 설계 | 기준 문서 |
+| [`09-dashboard.md`](architecture_v1/09-dashboard.md) | Dashboard 설계 | 기준 문서 |
 | [`schemas/README.md`](../schemas/README.md) | 스키마가 아직 DRAFT임을 명시, 담당 매핑 | 쉬운 요약 |
 | [`schemas/*.schema.json`](../schemas) | 스키마 원본 (JSON Schema, **현재 DRAFT**, 검증 도구가 실제로 참조하는 파일) | 기준 문서 |
 
