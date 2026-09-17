@@ -25,10 +25,27 @@
         "properties": {
           "name": { "type": "string" },
           "version": { "type": ["string", "null"] },
+          "version_spec": { "type": ["string", "null"], "description": "범위 표기 원본 문자열(예: >=1.0,<2.0). 락파일로 못 풀었을 때만 채움." },
+          "version_hint": { "type": ["string", "null"], "description": "deps.dev로 추정한 참고용 버전. version과 달리 확정된 사실이 아님." },
+          "extras": { "type": "array", "items": { "type": "string" }, "description": "pkg[extra] 형태의 extras 목록." },
+          "vcs_url": { "type": ["string", "null"], "description": "resolution_status가 vcs_source일 때만 채움." },
+          "is_transitive": { "type": "boolean", "description": "락파일에서만 발견되고 직접 선언이 없으면 true. 위험도 계산용 신호 아님 — R4/Dashboard의 조치 경로 표시용." },
           "ecosystem": { "type": "string" },
-          "source": { "type": "array", "items": { "type": "string", "enum": ["manifest", "import", "dockerfile"] } },
+          "source": { "type": "array", "items": { "type": "string", "enum": ["manifest", "import", "dockerfile", "lockfile"] } },
           "declared_in": { "type": "array", "items": { "type": "string" } },
-          "resolution_status": { "type": "string", "enum": ["resolved", "unresolved"] },
+          "resolution_status": { "type": "string", "enum": ["resolved", "unresolved", "vcs_source"] },
+          "version_conflicts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["value", "declared_in"],
+              "properties": {
+                "value": { "type": "string" },
+                "declared_in": { "type": "string" }
+              }
+            },
+            "description": "여러 출처에서 서로 다른 버전이 나왔을 때 version에 채택되지 않은 나머지 값 보존."
+          },
           "pypi": {
             "type": "object",
             "properties": {
@@ -65,11 +82,12 @@
               "properties": {
                 "id": { "type": "string" },
                 "aliases": { "type": "array", "items": { "type": "string" } },
-                "severity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+                "severity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL", "UNKNOWN"] },
                 "cvss_base_score": { "type": ["number", "null"], "minimum": 0, "maximum": 10 },
                 "cvss_source": { "type": ["string", "null"], "enum": ["nvd", "osv", null] },
                 "fixed_versions": { "type": "array", "items": { "type": "string" } },
-                "osv_url": { "type": "string" }
+                "osv_url": { "type": "string" },
+                "version_matched": { "type": ["boolean", "string"], "enum": [true, false, "estimated"], "description": "true=확정 버전으로 매칭됨, estimated=version_hint로 매칭(추정), false=버전 모른 채 이름만으로 조회(신뢰도 낮음)." }
               }
             }
           },

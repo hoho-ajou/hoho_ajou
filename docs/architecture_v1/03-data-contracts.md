@@ -40,10 +40,27 @@
         "properties": {
           "name": { "type": "string" },
           "version": { "type": ["string", "null"] },
+          "version_spec": { "type": ["string", "null"], "description": "범위 표기 원본 문자열(예: >=1.0,<2.0). 락파일로 못 풀었을 때만 채움." },
+          "version_hint": { "type": ["string", "null"], "description": "deps.dev로 추정한 참고용 버전. version과 달리 확정된 사실이 아님." },
+          "extras": { "type": "array", "items": { "type": "string" }, "description": "pkg[extra] 형태의 extras 목록." },
+          "vcs_url": { "type": ["string", "null"], "description": "resolution_status가 vcs_source일 때만 채움." },
+          "is_transitive": { "type": "boolean", "description": "락파일에서만 발견되고 직접 선언이 없으면 true. 위험도 계산용 신호 아님 — R4/Dashboard의 조치 경로 표시용." },
           "ecosystem": { "type": "string" },
-          "source": { "type": "array", "items": { "type": "string", "enum": ["manifest", "import", "dockerfile"] } },
+          "source": { "type": "array", "items": { "type": "string", "enum": ["manifest", "import", "dockerfile", "lockfile"] } },
           "declared_in": { "type": "array", "items": { "type": "string" } },
-          "resolution_status": { "type": "string", "enum": ["resolved", "unresolved"] },
+          "resolution_status": { "type": "string", "enum": ["resolved", "unresolved", "vcs_source"] },
+          "version_conflicts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["value", "declared_in"],
+              "properties": {
+                "value": { "type": "string" },
+                "declared_in": { "type": "string" }
+              }
+            },
+            "description": "여러 출처에서 서로 다른 버전이 나왔을 때 version에 채택되지 않은 나머지 값 보존."
+          },
           "pypi": {
             "type": "object",
             "properties": {
@@ -80,11 +97,12 @@
               "properties": {
                 "id": { "type": "string" },
                 "aliases": { "type": "array", "items": { "type": "string" } },
-                "severity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+                "severity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL", "UNKNOWN"] },
                 "cvss_base_score": { "type": ["number", "null"], "minimum": 0, "maximum": 10 },
                 "cvss_source": { "type": ["string", "null"], "enum": ["nvd", "osv", null] },
                 "fixed_versions": { "type": "array", "items": { "type": "string" } },
-                "osv_url": { "type": "string" }
+                "osv_url": { "type": "string" },
+                "version_matched": { "type": ["boolean", "string"], "enum": [true, false, "estimated"], "description": "true=확정 버전으로 매칭됨, estimated=version_hint로 매칭(추정), false=버전 모른 채 이름만으로 조회(신뢰도 낮음)." }
               }
             }
           },
@@ -191,6 +209,9 @@
 | `dependencies[].distribution_files[]` | 배포 파일(sdist/wheel) 경로·해시(결정 기록 R1-결정4) | R3 — 정적 코드 분석 시 실제 파일 매칭 |
 | `agent.permissions[]` | 에이전트 권한(타입+대상 자산). 값은 Collector, enum·구조는 R4 소유(결정 기록 R4-결정1) | R2 — `permission_weight` 계산 / R4 — `permission` 노드+`grants` 엣지 생성 (경계면 1을 건너뛰어 직접 전달) |
 | `dependencies[]` 전체(배포일·다운로드 추정치 등) | 패키지 메타데이터 전반 | R3 — feature extraction 입력 |
+| `dependencies[].version_conflicts[]` | 여러 출처(매니페스트 복수/Dockerfile)에서 버전이 다르게 나왔을 때, Collector가 판단하지 않고 전부 보존한 값 | R2 — 필요시 신뢰도 판단에 참고(사용 여부는 R2 재량) |
+| `dependencies[].version_hint`, `vulnerabilities[].version_matched` | deps.dev로 추정한 참고 버전과, 취약점이 그 추정/확정 버전에 실제로 매칭됐는지(`true`/`estimated`/`false`) | R2 — 취약점 신호의 신뢰도 가중에 활용 가능 |
+| `dependencies[].is_transitive` | 락파일에서만 발견된 전이 의존성 여부. **위험도 계산용 신호 아님** | R4/Dashboard — 조치(remediation) 경로 표시("이 취약점이 어떤 패키지를 통해 들어왔는지") |
 
 ---
 
