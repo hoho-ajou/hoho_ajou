@@ -1,0 +1,14 @@
+{
+  "status": "SUCCESS",
+  "detected_anomalies": [
+    {
+      "package_name": "example-pkg",
+      "anomaly_score": 0.85,
+      "is_malicious": true,
+      "top_features": [
+        "typosquatting_similarity",
+        "recent_author_change"
+      ]
+    }
+  ]
+}
