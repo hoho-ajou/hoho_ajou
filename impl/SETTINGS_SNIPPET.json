@@ -1,0 +1,25 @@
+{
+  "_comment": "Merge the 'hooks' key below into your .claude/settings.json (replace /absolute/path/to with this repo's real path). Hook I/O contract verified against https://code.claude.com/docs/en/hooks.md (permissionDecision/permissionDecisionReason nested under hookSpecificOutput; ask/deny/allow confirmed live in-session). Two hooks: Bash covers T1/T2 (install scan) and T10/T11 (integrity + protected-path writes via shell); Edit|Write covers T9 (MCP config registration) and T11 (direct edits to protected files).",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /absolute/path/to/impl/hooks/pretooluse_check.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /absolute/path/to/impl/hooks/pretooluse_editwrite_check.py"
+          }
+        ]
+      }
+    ]
+  }
+}
