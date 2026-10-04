@@ -1,0 +1,5 @@
+{
+  "name": "aasm-gate-proto",
+  "version": "0.1.0",
+  "description": "Prototype: AASM Guard owns its review dialog (allow / deny / details) instead of the generic permission popup"
+}
